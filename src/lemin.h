@@ -39,28 +39,32 @@ typedef	struct		s_info
 	t_room	*end;
 }					t_info;
 
-typedef enum
+typedef enum		e_qualities
 {
 	SIMPLE = 0,
 	START,
 	END
 }					qualities;
 
-typedef enum
+typedef enum		e_errors
 {
 	ANT_AMOUNT_ERROR = 2,
 	ROOM_NAME_ERROR,
 	COORDINATE_PROBLEM,
 	ALLOCATE_MEMORY_PROBLEM,
-	HT_MEMORY_PROBLEM,
+	MEMORY_PROBLEM,
 	PUTTING_ROOM_PROBLEM,
-	SOME
+	SOME,
+	ROOM_NAME_DUPLICATE,
+	ROOM_COORD_DUPLICATE,
+	CONNECT_IS_ROOM_ISNT
 }					errors;
 
 /*
 main.c
 */
-size_t	ft_hashfunc(char *key, size_t size);
+size_t		ft_hashfunc(char *key, size_t size);
+void		read_rooms(char **line, t_info *inf);
 
 /*
 checker.c
@@ -80,14 +84,36 @@ ht_make.c
 */
 t_room		**create_ht(t_info *inf);
 t_room		*create_room(char *str);
-int			put_in_ht(t_room **ht, t_room *new_room, t_info *inf);
-int			put_room_in_ht(t_room **ht, char *str_room, t_info *inf, int quality);
+int			put_in_ht(t_room *new_room, t_info *inf);
+int			put_room_in_ht(char *str_room, t_info *inf, int quality);
 int			make_ht(t_info *inf);
 
 /*
 emancipator.c
 */
-void	free_room_info(char **rooms);
+void		free_char_arr(char **rooms);
 
+/*
+room_checker.c
+*/
+void		check_new_room(t_room *new_room, t_info *inf);
+int			room_is_present(char *name, t_info *inf);
+int			check_connection(char *connect_str, t_info *inf);
+
+/*
+errors.c
+*/
+void		finish(int er);
+void		room_problems(int er);
+void		memory_problem(int er);
+void		other_errors(int er);
+
+/*
+printer.c
+*/
+void		print_ht(t_room **ht, t_info *inf);
 
 #endif
+
+
+

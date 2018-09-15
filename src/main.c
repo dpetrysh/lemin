@@ -12,8 +12,6 @@
 
 #include "lemin.h"
 
-
-
 int		get_ants_number(t_info *inf)
 {
 	char *line;
@@ -34,42 +32,41 @@ int		get_ants_number(t_info *inf)
 	return (1);
 }
 
-int		check_rooms(t_info *inf)
+void		read_rooms(char **line, t_info *inf)
 {
-	char	*line;
 	char	*tmp;
 	int		err;
 
 	inf->rooms = (char *)ft_memalloc(1);
-	while (get_next_line(0, &line) && (err = is_room_name(line)) && err == 1)
+	while (get_next_line(0, line) && !is_connection(*line) && (err = is_room_name(*line)) && err == 1)
 	{
-		if (!is_comment(line))
+		if (!is_comment(*line))
 			inf->size++;
 		tmp = inf->rooms;
-		inf->rooms = ft_strjoin(inf->rooms, line);
+		inf->rooms = ft_strjoin(inf->rooms, *line);
 		inf->rooms = join_slashn(&inf->rooms);
 		free(tmp);
-		free(line);
+		free(*line);
 	}
-	if (err != 1 && !is_connection(line))
-	{
-		return (err);
-	}
-	return (0);
+	if (err != 1 && !is_connection(*line))
+		finish(ROOM_NAME_ERROR);
 }
 
 int		ft_read(t_info *inf)
 {
+	bool	is_finished;
 	char	*line;
-	int err;
 
 	if (!get_ants_number(inf))
-		return (ANT_AMOUNT_ERROR);
-	if (!(err = check_rooms(inf)))
-		return (err);
-	while (get_next_line(0, &line) && is_connection(line)) // read connections
+		finish(ANT_AMOUNT_ERROR);
+	read_rooms(&line, inf);
+	make_ht(inf);
+	is_finished = 1;
+	while (is_finished && (is_connection(line) || is_comment(line)))
 	{
+		check_connection(line, inf);
 		free(line);
+		is_finished = get_next_line(0, &line);
 	}
 	return (0);
 }
@@ -89,29 +86,6 @@ size_t	ft_hashfunc(char *key, size_t size)
 	return ((s2 << 16) + s1) % size;
 }
 
-
-void		print_ht(t_room **ht, t_info *inf)
-{
-	t_room *tmp;
-	int i;
-
-	i = -1;
-	while (++i < inf->size)
-	{
-		// printf("i=%d\n", i);
-		if (ht[i])
-		{
-			printf("--->id=%d, name=%s\n", i, ht[i]->name);
-			tmp = ht[i]->next;
-			while (tmp)
-			{
-				printf("--->id=%d, name=%s\n", i, tmp->name);
-				tmp = tmp->next;
-			}
-		}
-	}
-}
-
 int		main(void)
 {
 	t_info inf;
@@ -122,9 +96,8 @@ int		main(void)
 	{
 		printf("n=%d\n", inf.n);
 		printf("size=%d\n", inf.size);
-		// printf("%s\n", inf.rooms);
-		printf("make_ht=%d\n", make_ht(&inf));
 		print_ht(inf.ht, &inf);
+		system("leaks amain");
 	}
 	return (0);
 }
@@ -189,11 +162,5 @@ int		main(void)
 	// a[2] = "a";
 
 	// while (1);
-
-
-
-
-
-
 
 

@@ -36,7 +36,7 @@ int		is_room_name(char *str)
 	while (str[i] != ' ' && str[i])
 		++i;
 	if (!str[i] || str[0] == 'L')
-		return (ROOM_NAME_ERROR);
+		finish(ROOM_NAME_ERROR);
 	++i;
 	while (ft_isdigit(str[i]))
 		i++;

@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   emancipator.c                                      :+:      :+:    :+:   */
+/*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpetrysh <dpetrysh@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/12 22:26:51 by dpetrysh          #+#    #+#             */
-/*   Updated: 2018/09/12 22:26:52 by dpetrysh         ###   ########.fr       */
+/*   Created: 2018/09/15 20:36:43 by dpetrysh          #+#    #+#             */
+/*   Updated: 2018/09/15 20:36:44 by dpetrysh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void	free_char_arr(char **rooms)
+void		print_ht(t_room **ht, t_info *inf)
 {
-	char **tmp;
+	t_room *tmp;
+	int i;
 
-	tmp = rooms;
-	while (*rooms)
+	i = -1;
+	while (++i < inf->size)
 	{
-		free(*rooms);
-		rooms++;
+		if (ht[i])
+		{
+			printf("--->id=%d, %s", i, ht[i]->name);
+			tmp = ht[i]->next;
+			while (tmp)
+			{
+				printf("-->%s", tmp->name);
+				tmp = tmp->next;
+			}
+			printf("\n");
+		}
 	}
-	free(tmp);
 }

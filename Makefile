@@ -23,7 +23,10 @@ _SRC = main.c \
 		checker.c \
 		utility.c \
 		ht_make.c \
-		emancipator.c
+		emancipator.c \
+		room_checker.c \
+		errors.c \
+		printer.c
 
 SRC = $(_SRC:%.c=$(SRC_DIR)%.c)$
 OBJ = $(_SRC:%.c=%.o)$

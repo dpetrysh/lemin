@@ -14,7 +14,7 @@
 
 t_room		**create_ht(t_info *inf)
 {
-	int i;
+	int		i;
 	t_room	**table;
 
 	if (!(table = (t_room **)malloc(sizeof(t_room *) * inf->size)))
@@ -25,43 +25,45 @@ t_room		**create_ht(t_info *inf)
 	return (table);
 }
 
-int			put_in_ht(t_room **ht, t_room *new_room, t_info *inf)
+int			put_in_ht(t_room *new_room, t_info *inf)
 {
-	int fd;
+	int	id;
 
-	fd = ft_hashfunc(new_room->name, inf->size);
-	if (!ht[fd])
+	id = ft_hashfunc(new_room->name, inf->size);
+	check_new_room(new_room, inf);
+	if (!inf->ht[id])
 	{
-		ht[fd] = new_room;
+		inf->ht[id] = new_room;
 		return (0);
 	}
 	else
 	{
-		new_room->next = ht[fd];
-		ht[fd] = new_room;
+		new_room->next = inf->ht[id];
+		inf->ht[id] = new_room;
 		return (0);
 	}
 	return (PUTTING_ROOM_PROBLEM);
 }
 
-int			put_room_in_ht(t_room **ht, char *str_room, t_info *inf, int quality)
+int			put_room_in_ht(char *str_room, t_info *inf, int quality)
 {
-	t_room *room;
+	t_room	*room;
 
 	if (!(room = create_room(str_room)))
 		return (ALLOCATE_MEMORY_PROBLEM);
-	printf("name=%s\n", room->name);
 	if (!quality)
-		return (put_in_ht(ht, room, inf)); // 0 - everything alright
-	if (quality == 1) // start
+	{
+		return (put_in_ht(room, inf));
+	}
+	if (quality == 1)
 	{
 		inf->start = room;
-		return (put_in_ht(ht, room, inf));
+		return (put_in_ht(room, inf));
 	}
-	if (quality == 2) // end
+	if (quality == 2)
 	{
 		inf->end = room;
-		return (put_in_ht(ht, room, inf));
+		return (put_in_ht(room, inf));
 	}
 	return (SOME);
 }
@@ -69,40 +71,47 @@ int			put_room_in_ht(t_room **ht, char *str_room, t_info *inf, int quality)
 t_room		*create_room(char *str)
 {
 	t_room	*room;
-	char	**info;
+	char	**room_info;
 
-	info = ft_strsplit(str, ' ');
+	room_info = ft_strsplit(str, ' ');
 	if (!(room = (t_room *)malloc(sizeof(t_room))))
 	{
-		free_room_info(info);
+		free_char_arr(room_info);
 		return (NULL);
 	}
-	room->name = info[0];
-	room->x = ft_atoi(info[1]);
-	room->y = ft_atoi(info[2]);
+	room->name = room_info[0];
+	room->x = ft_atoi(room_info[1]);
+	room->y = ft_atoi(room_info[2]);
+	free(room_info[1]);
+	free(room_info[2]);
+	free(room_info);
 	room->next = NULL;
-
-	// free_room_info(info);
 	return (room);
 }
 
 int			make_ht(t_info *inf)
 {
+	int		res;
 	char	**room_inp;
-	int i;
+	char	**tmp;
 
 	if (!(inf->ht = create_ht(inf)))
-		return (HT_MEMORY_PROBLEM);
+		finish(MEMORY_PROBLEM);
 	room_inp = ft_strsplit(inf->rooms, '\n');
-	i = -1;
-	while (++i < inf->size)
+	tmp = room_inp;
+	while (*room_inp)
 	{
-		if (is_room_name(room_inp[i]))
-			return (put_room_in_ht(inf->ht, room_inp[i], inf, SIMPLE));
-		if (ft_strcmp(room_inp[i], "##start"))
-			return (put_room_in_ht(inf->ht, room_inp[++i], inf, START));
-		if (ft_strcmp(room_inp[i], "##end"))
-			return (put_room_in_ht(inf->ht, room_inp[++i], inf, END));
+		res = 0;
+		if (!ft_strcmp(*room_inp, "##start"))
+			res = 1;
+		else if (!ft_strcmp(*room_inp, "##end"))
+			res = 2;
+		if (is_room_name(*room_inp) == 1 && !is_comment(*room_inp))
+			put_room_in_ht(*room_inp, inf, res);
+		room_inp++;
 	}
-	return (20);
+	free_char_arr(tmp);
+	return (0);
 }
+
+

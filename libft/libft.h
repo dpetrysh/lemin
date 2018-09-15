@@ -18,6 +18,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+#include <stdbool.h>
 
 # define BUFF_SIZE 1000
 
