@@ -25,15 +25,19 @@ t_room		**create_al(t_info *inf)
 	return (adj_list);
 }
 
-void	add_mate(char *room_name, char *mate_name, t_info *inf)
+void	add_mate(char *line, t_info *inf)
 {
+	char	**connect;
 	t_room	*room;
 	t_room	*mate;
 
-	room = get_room(room_name, inf);
-	mate = get_room(mate_name, inf);
+	connect = ft_strsplit(line, '-');
+	room = get_room(connect[0], inf);
+	mate = get_room(connect[1], inf);
 	if (!room->mate)
+	{
 		room->mate = mate;
+	}
 	else
 	{
 		mate->mate = room->mate;

@@ -110,7 +110,10 @@ int			make_ht(t_info *inf)
 		else if (!ft_strcmp(*room_inp, "##end"))
 			res = 2;
 		if (is_room_name(*room_inp) == 1 && !is_comment(*room_inp))
+		{
+			printf("BBB\n");
 			put_room_in(*room_inp, inf, res);
+		}
 		room_inp++;
 	}
 	free_char_arr(tmp);

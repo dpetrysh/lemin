@@ -98,7 +98,7 @@ int		main(void)
 		printf("n=%d\n", inf.n);
 		printf("size=%d\n", inf.size);
 		print_ht(inf.ht, &inf);
-		print_al(&inf);
+		// print_al(&inf);
 		// system("leaks amain");
 	}
 	return (0);

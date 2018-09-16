@@ -22,6 +22,7 @@
 
 typedef	struct		s_room
 {
+	int				mate_num;
 	int				index;
 	int				lvl;
 	int				x;
@@ -130,7 +131,7 @@ void		print_ht(t_room **ht, t_info *inf);
 neighbours.c
 */
 t_room		**create_al(t_info *inf);
-void		add_mate(char *room_name, char *mate_name, t_info *inf);
+void		add_mate(char *line, t_info *inf);
 t_room		*get_room(char *name, t_info *inf);
 
 #endif
