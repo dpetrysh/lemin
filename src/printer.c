@@ -33,3 +33,15 @@ void		print_ht(t_room **ht, t_info *inf)
 		}
 	}
 }
+
+void		print_al(t_info *inf)
+{
+	int i;
+
+	i = -1;
+	while (++i < inf->size)
+	{
+		printf("%s\n", (inf->al[i])->name);
+	}
+}
+

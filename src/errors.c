@@ -65,7 +65,7 @@ void	other_errors(int er)
 	}
 	if (er == CONNECT_IS_ROOM_ISNT)
 	{
-		printf("There is a false connection\nThat does a room consists\nDevoided by perfection\nBecause this room is missed");
+		printf("There is a false connection\nThat does a room consists\nDevoided by perfection\nBecause the room is missed");
 		exit(EXIT_FAILURE);
 	}
 }

@@ -63,8 +63,9 @@ int		check_connection(char *connect_str, t_info *inf)
 			finish(CONNECT_IS_ROOM_ISNT);
 		}
 			free_char_arr(connect);
+			return (1);
 	}
-	return (1);
+	return (0);
 }
 
 

@@ -12,6 +12,15 @@
 
 #include "lemin.h"
 
+void	make_info(t_info *inf)
+{
+	inf->n = 0;
+	inf->index = -1;
+	inf->size = 0;
+	inf->end = NULL;
+	inf->start = NULL;
+}
+
 char	*join_slashn(char **str)
 {
 	int		i;

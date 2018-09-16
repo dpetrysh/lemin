@@ -64,7 +64,7 @@ int		ft_read(t_info *inf)
 	is_finished = 1;
 	while (is_finished && (is_connection(line) || is_comment(line)))
 	{
-		check_connection(line, inf);
+		check_connection(line, inf); //if-->add_connect
 		free(line);
 		is_finished = get_next_line(0, &line);
 	}
@@ -92,12 +92,14 @@ int		main(void)
 
 	int n;
 
+	make_info(&inf);
 	if (!(n = ft_read(&inf)))
 	{
 		printf("n=%d\n", inf.n);
 		printf("size=%d\n", inf.size);
 		print_ht(inf.ht, &inf);
-		system("leaks amain");
+		print_al(&inf);
+		// system("leaks amain");
 	}
 	return (0);
 }

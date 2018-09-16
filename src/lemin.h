@@ -22,6 +22,7 @@
 
 typedef	struct		s_room
 {
+	int				index;
 	int				lvl;
 	int				x;
 	int				y;
@@ -29,12 +30,20 @@ typedef	struct		s_room
 	struct	s_room	*next;
 }					t_room;
 
+// typedef	struct		s_alel
+// {
+// 	struct	s_room	*room;
+// 	struct	s_room	*next;
+// }					t_alel;
+
 typedef	struct		s_info
 {
 	int		n;
+	int		index;
 	int		size;
 	char	*rooms;
 	t_room	**ht;
+	t_room	**al;
 	t_room	*start;
 	t_room	*end;
 }					t_info;
@@ -77,15 +86,16 @@ int		is_connection(char *str);
 /*
 utility.c
 */
+void	make_info(t_info *inf);
 char	*join_slashn(char **str);
 
 /*
 ht_make.c
 */
 t_room		**create_ht(t_info *inf);
-t_room		*create_room(char *str);
+t_room		*create_room(char *str, t_info *inf);
 int			put_in_ht(t_room *new_room, t_info *inf);
-int			put_room_in_ht(char *str_room, t_info *inf, int quality);
+int			put_room_in(char *str_room, t_info *inf, int quality);
 int			make_ht(t_info *inf);
 
 /*
@@ -111,7 +121,14 @@ void		other_errors(int er);
 /*
 printer.c
 */
+void		print_al(t_info *inf);
 void		print_ht(t_room **ht, t_info *inf);
+
+
+/*
+neighbours.c
+*/
+t_room		**create_al(t_info *inf);
 
 #endif
 

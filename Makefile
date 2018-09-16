@@ -26,7 +26,8 @@ _SRC = main.c \
 		emancipator.c \
 		room_checker.c \
 		errors.c \
-		printer.c
+		printer.c \
+		neighbours.c
 
 SRC = $(_SRC:%.c=$(SRC_DIR)%.c)$
 OBJ = $(_SRC:%.c=%.o)$
