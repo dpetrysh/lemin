@@ -28,6 +28,7 @@ typedef	struct		s_room
 	int				y;
 	char			*name;
 	struct	s_room	*next;
+	struct	s_room	*mate;
 }					t_room;
 
 // typedef	struct		s_alel
@@ -129,6 +130,8 @@ void		print_ht(t_room **ht, t_info *inf);
 neighbours.c
 */
 t_room		**create_al(t_info *inf);
+void		add_mate(char *room_name, char *mate_name, t_info *inf);
+t_room		*get_room(char *name, t_info *inf);
 
 #endif
 

@@ -36,12 +36,20 @@ void		print_ht(t_room **ht, t_info *inf)
 
 void		print_al(t_info *inf)
 {
+	t_room *tmp;
 	int i;
 
 	i = -1;
 	while (++i < inf->size)
 	{
-		printf("%s\n", (inf->al[i])->name);
+		printf("room=%s", (inf->al[i])->name);
+		tmp = inf->al[i]->mate;
+		while (tmp)
+		{
+			printf("-->%s\n", tmp->name);
+			tmp = tmp->next;
+		}
+		printf("\n");
 	}
 }
 

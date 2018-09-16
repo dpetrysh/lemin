@@ -25,14 +25,24 @@ t_room		**create_al(t_info *inf)
 	return (adj_list);
 }
 
+void	add_mate(char *room_name, char *mate_name, t_info *inf)
+{
+	t_room	*room;
+	t_room	*mate;
 
-
-
+	room = get_room(room_name, inf);
+	mate = get_room(mate_name, inf);
+	if (!room->mate)
+		room->mate = mate;
+	else
+	{
+		mate->mate = room->mate;
+		room->mate = mate;
+	}
+}
 
 // void	add_connection(char *line, t_info *inf)
 // {
-// 	int		id1;
-// 	int		id2;
 // 	char	**connect;
 // 	t_room	*room1;
 // 	t_room	*room2;
@@ -40,19 +50,21 @@ t_room		**create_al(t_info *inf)
 // 	connect = ft_strsplit(line, '-');
 // 	id1 = ft_hashfunc(connect[0]);
 // 	id2 = ft_hashfunc(connect[1]);
-
 // }
 
-// t_room	*find_room(char *name, t_info *inf)
-// {
-// 	t_room	*room;
-// 	int fd;
+t_room	*get_room(char *name, t_info *inf)
+{
+	t_room	*room;
+	int id;
 
-// 	fd = ft_hashfunc(name, inf->size);
-// 	room = inf->ht[id];
-// 	while (room)
-// 	{
-
-// 	}
-// }
+	id = ft_hashfunc(name, inf->size);
+	room = inf->ht[id];
+	while (room)
+	{
+		if (!ft_strcmp(room->name, name))
+			return (room);
+		room = room->next;
+	}
+	return (NULL);
+}
 
