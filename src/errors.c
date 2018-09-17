@@ -32,6 +32,10 @@ void	finish(int er)
 		room_problems(er);
 	if (er == DOUBLE_CONNECTION)
 		other_errors(er);
+	if (er == DOUBLE_START)
+		other_errors(DOUBLE_START);
+	if (er == DOUBLE_END)
+		other_errors(DOUBLE_END);
 }
 
 void	room_problems(int er)
@@ -87,6 +91,16 @@ void	other_errors(int er)
 	if (er == DOUBLE_CONNECTION)
 	{
 		printf("Please give me satisfaction -\nGet rid of double connection");
+		exit(EXIT_FAILURE);
+	}
+	if (er == DOUBLE_START)
+	{
+		printf("There is doubling ##START\n");
+		exit(EXIT_FAILURE);
+	}
+	if (er == DOUBLE_END)
+	{
+		printf("There is doubling ##END\n");
 		exit(EXIT_FAILURE);
 	}
 }

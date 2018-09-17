@@ -94,5 +94,17 @@ int		room_is_present(char *name, t_info *inf)
 	return (0);
 }
 
+void	check_double_start_end(int quality, t_info *inf)
+{
+	if (quality == 1 && inf->start_is_present)
+		finish(DOUBLE_START);
+	if (quality == 2 && inf->end_is_present)
+		finish(DOUBLE_END);
+}
+
+
+
+
+
 
 

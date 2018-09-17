@@ -22,7 +22,7 @@ void		print_ht(t_room **ht, t_info *inf)
 	{
 		if (ht[i])
 		{
-			printf("--->id=%d, %s(%d)", i, ht[i]->name, ht[i]->index);
+			printf("--->id=%d, %s(%d)", i, ht[i]->name, ht[i]->lvl);
 			tmp = ht[i]->next;
 			while (tmp)
 			{

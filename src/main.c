@@ -107,11 +107,14 @@ int		main(void)
 	make_info(&inf);
 	if (!(n = ft_read(&inf)))
 	{
+		// printf("AAA1\n");
+		bfs_search(&inf);
+		// printf("%s\n", inf.start->name);
 		printf("n=%d\n", inf.n);
 		printf("size=%d\n", inf.size);
 		print_ht(inf.ht, &inf);
 		print_al(&inf);
-		system("leaks amain");
+		// system("leaks amain");
 	}
 	return (0);
 }

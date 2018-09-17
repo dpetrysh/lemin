@@ -39,11 +39,13 @@ typedef	struct		s_mate
 typedef	struct		s_que
 {
 	t_room			*room;
-	struct	s_mate	*next;
+	struct	s_que	*next;
 }					t_que;
 
 typedef	struct		s_info
 {
+	bool	start_is_present;
+	bool	end_is_present;
 	int		n;
 	int		index;
 	int		size;
@@ -77,7 +79,9 @@ typedef enum		e_errors
 	CONNECT_IS_ROOM_ISNT,
 	IT_IS_NOT_CONNECTION,
 	SELF_CONNECTION,
-	DOUBLE_CONNECTION
+	DOUBLE_CONNECTION,
+	DOUBLE_START,
+	DOUBLE_END
 }					errors;
 
 /*
@@ -106,7 +110,7 @@ ht_make.c
 t_room		**create_ht(t_info *inf);
 t_room		*create_room(char *str, t_info *inf);
 int			put_in_ht(t_room *new_room, t_info *inf);
-int			put_room_in(char *str_room, t_info *inf, int quality);
+int			put_room_in(char *str_room, t_info *inf, int *quality);
 int			make_ht(t_info *inf);
 
 /*
@@ -149,6 +153,9 @@ t_mate		*create_mate(char *name);
 bfs.c
 */
 void		bfs_search(t_info *inf);
+void		enqueue_mates(t_room *room, t_info *inf);
+void		enqueue(t_room *room, t_info *inf);
+void		dequeue(t_info *inf);
 
 #endif
 

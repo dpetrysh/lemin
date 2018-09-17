@@ -45,22 +45,27 @@ int			put_in_ht(t_room *new_room, t_info *inf)
 	return (PUTTING_ROOM_PROBLEM);
 }
 
-int			put_room_in(char *str_room, t_info *inf, int quality)
+int			put_room_in(char *str_room, t_info *inf, int *quality)
 {
 	t_room	*room;
 
 	if (!(room = create_room(str_room, inf)))
 		return (ALLOCATE_MEMORY_PROBLEM);
-	if (!quality)
+	if (!(*quality))
 		return (put_in_ht(room, inf));
-	if (quality == 1)
+	else if (*quality == 1)
 	{
+		room->lvl = 0;
 		inf->start = room;
+		*quality = 0;
+		inf->start_is_present = 1;
 		return (put_in_ht(room, inf));
 	}
-	if (quality == 2)
+	else if (*quality == 2)
 	{
 		inf->end = room;
+		*quality = 0;
+		inf->end_is_present = 1;
 		return (put_in_ht(room, inf));
 	}
 	return (SOME);
@@ -83,7 +88,7 @@ t_room		*create_room(char *str, t_info *inf)
 	free(room_info[1]);
 	free(room_info[2]);
 	free(room_info);
-	// room->lvl = -1;
+	room->lvl = -1;
 	room->next = NULL;
 	room->index = ++inf->index;
 	return (room);
@@ -101,15 +106,15 @@ int			make_ht(t_info *inf)
 		finish(MEMORY_PROBLEM);
 	room_inp = ft_strsplit(inf->rooms, '\n');
 	tmp = room_inp;
+	res = 0;
 	while (*room_inp)
 	{
-		res = 0;
 		if (!ft_strcmp(*room_inp, "##start"))
 			res = 1;
 		else if (!ft_strcmp(*room_inp, "##end"))
 			res = 2;
 		if (is_room_name(*room_inp) == 1 && !is_comment(*room_inp))
-			put_room_in(*room_inp, inf, res);
+			put_room_in(*room_inp, inf, &res);
 		room_inp++;
 	}
 	free_char_arr(tmp);

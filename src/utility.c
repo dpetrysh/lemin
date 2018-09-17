@@ -14,13 +14,15 @@
 
 void	make_info(t_info *inf)
 {
+	inf->start_is_present = 0;
+	inf->end_is_present = 0;
 	inf->n = 0;
 	inf->index = -1;
 	inf->size = 0;
 	inf->end = NULL;
 	inf->start = NULL;
 	inf->front = NULL;
-	inf->end = NULL;
+	inf->rear = NULL;
 }
 
 char	*join_slashn(char **str)
