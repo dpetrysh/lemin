@@ -12,6 +12,50 @@
 
 #include "lemin.h"
 
+int		check_connection(char *connect_str, t_info *inf)
+{
+	char	**connect;
+
+	if (!is_comment(connect_str))
+	{
+		connect = ft_strsplit(connect_str, '-');
+		if (!room_is_present(connect[0], inf) || !room_is_present(connect[1], inf))
+		{
+			free_char_arr(connect);
+			finish(CONNECT_IS_ROOM_ISNT);
+		}
+		if (!ft_strcmp(connect[0], connect[1]))
+		{
+			free_char_arr(connect);
+			finish(SELF_CONNECTION);
+		}
+		if (!check_connection_dub(connect[0], connect[1], inf))
+		{
+			free_char_arr(connect);
+			finish(DOUBLE_CONNECTION);
+		}
+		free_char_arr(connect);
+		return (1);
+	}
+	return (0);
+}
+
+int		check_connection_dub(char *room_name, char *mate_name, t_info *inf)
+{
+	t_room	*room;
+	t_mate	*node;
+
+	room = get_room(room_name, inf);
+	node = inf->al[room->index];
+	while (node)
+	{
+		if (!ft_strcmp(node->name, mate_name))
+			return (0);
+		node = node->next;
+	}
+	return (1);
+}
+
 void	check_new_room(t_room *new_room, t_info *inf)
 {
 	int		i;
@@ -46,24 +90,6 @@ int		room_is_present(char *name, t_info *inf)
 		if (!ft_strcmp(tmp->name, name))
 			return (1);
 		tmp = tmp->next;
-	}
-	return (0);
-}
-
-int		check_connection(char *connect_str, t_info *inf)
-{
-	char	**connect;
-
-	if (!is_comment(connect_str))
-	{
-		connect = ft_strsplit(connect_str, '-');
-		if (!room_is_present(connect[0], inf) || !room_is_present(connect[1], inf))
-		{
-			free_char_arr(connect);
-			finish(CONNECT_IS_ROOM_ISNT);
-		}
-			free_char_arr(connect);
-			return (1);
 	}
 	return (0);
 }

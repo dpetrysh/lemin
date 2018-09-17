@@ -26,6 +26,12 @@ void	finish(int er)
 		other_errors(er);
 	if (er == CONNECT_IS_ROOM_ISNT)
 		other_errors(er);
+	if (er == IT_IS_NOT_CONNECTION)
+		other_errors(er);
+	if (er == SELF_CONNECTION)
+		room_problems(er);
+	if (er == DOUBLE_CONNECTION)
+		other_errors(er);
 }
 
 void	room_problems(int er)
@@ -45,6 +51,11 @@ void	room_problems(int er)
 		printf("There are some problems with room's name (check if it don't start with 'L')");
 		exit(EXIT_FAILURE);
 	}
+	if (er == SELF_CONNECTION)
+	{
+		printf("We know that you can connect to your inner self i.e. to yourself! But rooms can't do that!");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	memory_problem(int er)
@@ -60,7 +71,7 @@ void	other_errors(int er)
 {
 	if (er == ANT_AMOUNT_ERROR)
 	{
-		printf("There is bad number of ants. Look closely to it. It should consist only by digits");
+		printf("I am the Number of the ants\nAnd you know that I do like\nTo wear my pants of digits\nInstead of symbols dyke!\n I say: fix it!");
 		exit(EXIT_FAILURE);
 	}
 	if (er == CONNECT_IS_ROOM_ISNT)
@@ -68,5 +79,20 @@ void	other_errors(int er)
 		printf("There is a false connection\nThat does a room consists\nDevoided by perfection\nBecause the room is missed");
 		exit(EXIT_FAILURE);
 	}
+	if (er == IT_IS_NOT_CONNECTION)
+	{
+		printf("There ought to be connection\nBut look! there is instead\nDemanding on defection\nSome string! Are you just mad?");
+		exit(EXIT_FAILURE);
+	}
+	if (er == DOUBLE_CONNECTION)
+	{
+		printf("Please give me satisfaction -\nGet rid of double connection");
+		exit(EXIT_FAILURE);
+	}
 }
+
+
+
+
+
 

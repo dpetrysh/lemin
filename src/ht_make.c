@@ -51,7 +51,6 @@ int			put_room_in(char *str_room, t_info *inf, int quality)
 
 	if (!(room = create_room(str_room, inf)))
 		return (ALLOCATE_MEMORY_PROBLEM);
-	inf->al[room->index] = room;
 	if (!quality)
 		return (put_in_ht(room, inf));
 	if (quality == 1)
@@ -84,8 +83,8 @@ t_room		*create_room(char *str, t_info *inf)
 	free(room_info[1]);
 	free(room_info[2]);
 	free(room_info);
+	// room->lvl = -1;
 	room->next = NULL;
-	room->mate = NULL;
 	room->index = ++inf->index;
 	return (room);
 }
@@ -110,10 +109,7 @@ int			make_ht(t_info *inf)
 		else if (!ft_strcmp(*room_inp, "##end"))
 			res = 2;
 		if (is_room_name(*room_inp) == 1 && !is_comment(*room_inp))
-		{
-			printf("BBB\n");
 			put_room_in(*room_inp, inf, res);
-		}
 		room_inp++;
 	}
 	free_char_arr(tmp);

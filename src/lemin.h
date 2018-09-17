@@ -22,21 +22,25 @@
 
 typedef	struct		s_room
 {
-	int				mate_num;
 	int				index;
 	int				lvl;
 	int				x;
 	int				y;
 	char			*name;
 	struct	s_room	*next;
-	struct	s_room	*mate;
 }					t_room;
 
-// typedef	struct		s_alel
-// {
-// 	struct	s_room	*room;
-// 	struct	s_room	*next;
-// }					t_alel;
+typedef	struct		s_mate
+{
+	char			*name;
+	struct	s_mate	*next;
+}					t_mate;
+
+typedef	struct		s_que
+{
+	t_room			*room;
+	struct	s_mate	*next;
+}					t_que;
 
 typedef	struct		s_info
 {
@@ -44,10 +48,12 @@ typedef	struct		s_info
 	int		index;
 	int		size;
 	char	*rooms;
+	t_mate	**al;
 	t_room	**ht;
-	t_room	**al;
 	t_room	*start;
 	t_room	*end;
+	t_que	*front;
+	t_que	*rear;
 }					t_info;
 
 typedef enum		e_qualities
@@ -68,7 +74,10 @@ typedef enum		e_errors
 	SOME,
 	ROOM_NAME_DUPLICATE,
 	ROOM_COORD_DUPLICATE,
-	CONNECT_IS_ROOM_ISNT
+	CONNECT_IS_ROOM_ISNT,
+	IT_IS_NOT_CONNECTION,
+	SELF_CONNECTION,
+	DOUBLE_CONNECTION
 }					errors;
 
 /*
@@ -111,6 +120,7 @@ room_checker.c
 void		check_new_room(t_room *new_room, t_info *inf);
 int			room_is_present(char *name, t_info *inf);
 int			check_connection(char *connect_str, t_info *inf);
+int			check_connection_dub(char *room_name, char *mate_name, t_info *inf);
 
 /*
 errors.c
@@ -128,13 +138,24 @@ void		print_ht(t_room **ht, t_info *inf);
 
 
 /*
-neighbours.c
+adj_list.c
 */
-t_room		**create_al(t_info *inf);
-void		add_mate(char *line, t_info *inf);
+t_mate		**create_al(t_info *inf);
+void		add_mate(char *room_name, char *mate_name, t_info *inf);
 t_room		*get_room(char *name, t_info *inf);
+t_mate		*create_mate(char *name);
+
+/*
+bfs.c
+*/
+void		bfs_search(t_info *inf);
 
 #endif
+
+
+
+
+
 
 
 

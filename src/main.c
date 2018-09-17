@@ -56,6 +56,7 @@ int		ft_read(t_info *inf)
 {
 	bool	is_finished;
 	char	*line;
+	char	**connect;
 
 	if (!get_ants_number(inf))
 		finish(ANT_AMOUNT_ERROR);
@@ -64,9 +65,20 @@ int		ft_read(t_info *inf)
 	is_finished = 1;
 	while (is_finished && (is_connection(line) || is_comment(line)))
 	{
-		check_connection(line, inf); //if-->add_connect
+		if (is_connection(line))
+		{
+			connect = ft_strsplit(line, '-');
+			if (check_connection(line, inf))
+				add_mate(connect[0], connect[1], inf);
+			free(connect);
+		}
 		free(line);
 		is_finished = get_next_line(0, &line);
+	}
+
+	if (!is_connection(line) && !is_comment(line))
+	{
+		finish(IT_IS_NOT_CONNECTION);
 	}
 	return (0);
 }
@@ -98,8 +110,8 @@ int		main(void)
 		printf("n=%d\n", inf.n);
 		printf("size=%d\n", inf.size);
 		print_ht(inf.ht, &inf);
-		// print_al(&inf);
-		// system("leaks amain");
+		print_al(&inf);
+		system("leaks amain");
 	}
 	return (0);
 }

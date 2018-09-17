@@ -12,12 +12,12 @@
 
 #include "lemin.h"
 
-t_room		**create_al(t_info *inf)
+t_mate		**create_al(t_info *inf)
 {
 	int		i;
-	t_room	**adj_list;
+	t_mate	**adj_list;
 
-	if (!(adj_list = (t_room **)malloc(sizeof(t_room *) * inf->size)))
+	if (!(adj_list = (t_mate **)malloc(sizeof(t_room *) * inf->size)))
 		return (NULL);
 	i = -1;
 	while (++i < inf->size)
@@ -25,36 +25,21 @@ t_room		**create_al(t_info *inf)
 	return (adj_list);
 }
 
-void	add_mate(char *line, t_info *inf)
+void	add_mate(char *room_name, char *mate_name, t_info *inf)
 {
-	char	**connect;
 	t_room	*room;
-	t_room	*mate;
+	t_mate	*mate;
 
-	connect = ft_strsplit(line, '-');
-	room = get_room(connect[0], inf);
-	mate = get_room(connect[1], inf);
-	if (!room->mate)
-	{
-		room->mate = mate;
-	}
-	else
-	{
-		mate->mate = room->mate;
-		room->mate = mate;
-	}
+	room = get_room(room_name, inf);
+	mate = create_mate(mate_name);
+	mate->next = inf->al[room->index];
+	inf->al[room->index] = mate;
+
+	room = get_room(mate_name, inf);
+	mate = create_mate(room_name);
+	mate->next = inf->al[room->index];
+	inf->al[room->index] = mate;
 }
-
-// void	add_connection(char *line, t_info *inf)
-// {
-// 	char	**connect;
-// 	t_room	*room1;
-// 	t_room	*room2;
-
-// 	connect = ft_strsplit(line, '-');
-// 	id1 = ft_hashfunc(connect[0]);
-// 	id2 = ft_hashfunc(connect[1]);
-// }
 
 t_room	*get_room(char *name, t_info *inf)
 {
@@ -72,3 +57,11 @@ t_room	*get_room(char *name, t_info *inf)
 	return (NULL);
 }
 
+t_mate	*create_mate(char *name)
+{
+	t_mate *mate;
+	mate = (t_mate *)malloc(sizeof(t_mate));
+	mate->name = name;
+	mate->next = NULL;
+	return (mate);
+}

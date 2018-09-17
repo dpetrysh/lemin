@@ -19,6 +19,8 @@ void	make_info(t_info *inf)
 	inf->size = 0;
 	inf->end = NULL;
 	inf->start = NULL;
+	inf->front = NULL;
+	inf->end = NULL;
 }
 
 char	*join_slashn(char **str)

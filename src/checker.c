@@ -21,8 +21,22 @@ int		is_comment(char *str)
 
 int		is_connection(char *str)
 {
+	int	i;
+
+	i = 1;
+	if (str[0] == '-')
+		return (0);
 	if (ft_strchr(str, '-'))
+	{
+		while (str[i] != '-')
+			i++;
+		++i;
+		while (str[i] && str[i] !='-')
+			i++;
+		if (str[i] == '-')
+			return (0);
 		return (1);
+	}
 	return (0);
 }
 

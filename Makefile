@@ -27,7 +27,9 @@ _SRC = main.c \
 		room_checker.c \
 		errors.c \
 		printer.c \
-		neighbours.c
+		adj_list.c \
+		bfs.c \
+		queue.c
 
 SRC = $(_SRC:%.c=$(SRC_DIR)%.c)$
 OBJ = $(_SRC:%.c=%.o)$
@@ -36,11 +38,11 @@ OBJ = $(_SRC:%.c=%.o)$
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) 
 	make -C $(LIB_DIR)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIB_DIR) -lft -g
 
-%.o: $(SRC_DIR)%.c 
+%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -I ./libft -c $< -o $@
 
 clean: 
