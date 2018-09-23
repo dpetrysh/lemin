@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <limits.h>
 # include "libft.h"
 
 #include <stdio.h>

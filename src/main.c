@@ -75,11 +75,8 @@ int		ft_read(t_info *inf)
 		free(line);
 		is_finished = get_next_line(0, &line);
 	}
-
 	if (!is_connection(line) && !is_comment(line))
-	{
 		finish(IT_IS_NOT_CONNECTION);
-	}
 	return (0);
 }
 
@@ -107,9 +104,7 @@ int		main(void)
 	make_info(&inf);
 	if (!(n = ft_read(&inf)))
 	{
-		// printf("AAA1\n");
 		bfs_search(&inf);
-		// printf("%s\n", inf.start->name);
 		printf("n=%d\n", inf.n);
 		printf("size=%d\n", inf.size);
 		print_ht(inf.ht, &inf);
