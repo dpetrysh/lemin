@@ -36,6 +36,8 @@ void	finish(int er)
 		other_errors(DOUBLE_START);
 	if (er == DOUBLE_END)
 		other_errors(DOUBLE_END);
+	if (er == ABSENT_WAYS)
+		room_problems(ABSENT_WAYS);
 }
 
 void	room_problems(int er)
@@ -58,6 +60,11 @@ void	room_problems(int er)
 	if (er == SELF_CONNECTION)
 	{
 		printf("We know that you can connect to your inner self i.e. to yourself! But rooms can't do that!");
+		exit(EXIT_FAILURE);
+	}
+	if (er == ABSENT_WAYS)
+	{
+		printf("The is no ways from start to end!!!\n");
 		exit(EXIT_FAILURE);
 	}
 }

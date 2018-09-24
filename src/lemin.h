@@ -88,7 +88,8 @@ typedef enum		e_errors
 	SELF_CONNECTION,
 	DOUBLE_CONNECTION,
 	DOUBLE_START,
-	DOUBLE_END
+	DOUBLE_END,
+	ABSENT_WAYS
 }					errors;
 
 /*
@@ -110,6 +111,7 @@ utility.c
 */
 void		make_info(t_info *inf);
 char		*join_slashn(char **str);
+int			enqueue_and_finish(t_room *room, t_info *inf);
 
 /*
 ht_make.c
@@ -172,6 +174,8 @@ t_way		*create_way(t_info *inf);
 int			min_mate_level(t_room *current, t_info *inf);
 int			have_another_older(t_room *older, t_room *applicant, t_info *inf);
 int			enqueue_closest(t_room *current, t_info *inf);
+int			count_safe_mates(t_room *room, t_info *inf);
+void		get_ways(t_info *inf);
 
 #endif
 

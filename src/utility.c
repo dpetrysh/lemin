@@ -45,3 +45,9 @@ char	*join_slashn(char **str)
 	}
 	return (NULL);
 }
+
+int		enqueue_and_finish(t_room *room, t_info *inf)
+{
+	enqueue(room, inf);
+	return (0);
+}

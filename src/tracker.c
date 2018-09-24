@@ -12,25 +12,33 @@
 
 #include "lemin.h"
 
+void	get_ways(t_info *inf)
+{
+	int i;
+	int num;
+
+	i = -1;
+	num = count_safe_mates(inf->end, inf);
+	if (num < 1)
+		finish(ABSENT_WAYS);
+	// while (++i < num)
+	// {
+
+	// }
+}
+
 t_way	*create_way(t_info *inf)
 {
 	t_way	*new_way;
 
 	new_way = (t_way *)malloc(sizeof(t_way));
 	enqueue(inf->end, inf);
-	// inf->start->lvl = -1;
-	while (inf->rear->room->lvl > 0)
+	while ((inf->rear->room->lvl > 1 || inf->rear->room == inf->end))
 	{
-		// printf("BBB%s\n", inf->rear->room->name);
-		if (inf->rear->room != inf->end)
-		{
-			// printf("KKK%s\n", inf->rear->room->name);
-			inf->rear->room->lvl = -1;
-		}
+		inf->rear->room->lvl = -1;
 		enqueue_closest(inf->rear->room, inf);
 	}
-	// printf("CCC%s\n", inf->rear->room->name);
-	// printf("DDD%d\n", inf->rear->room->lvl);
+	inf->rear->room->lvl = -1;
 	new_way->front = inf->front;
 	new_way->rear = inf->rear;
 	inf->front = NULL;
@@ -49,7 +57,7 @@ int		min_mate_level(t_room *current, t_info *inf)
 	while (mate)
 	{
 		tmp = get_room(mate->name, inf);
-		if (tmp->lvl < min && tmp->lvl > -1)
+		if (tmp->lvl < min && tmp->lvl > 0)
 			min = tmp->lvl;
 		mate = mate->next;
 	}
@@ -89,20 +97,32 @@ int		enqueue_closest(t_room *current, t_info *inf)
 		{
 			suitable = tmp;
 			if (!have_another_older(current, tmp, inf))
-			{
-				enqueue(tmp, inf);
-				return (0);
-			}
+				return (enqueue_and_finish(tmp, inf));
 		}
 		mate = mate->next;
 	}
 	if (suitable)
-		enqueue(suitable, inf);
-	return (1);
+		return (enqueue_and_finish(suitable, inf));
+	return (0);
 }
 
+int		count_safe_mates(t_room *room, t_info *inf)
+{
+	int		count;
+	t_mate	*mate;
+	t_room	*tmp;
 
-
+	count = 0;
+	mate = inf->al[room->index];
+	while (mate)
+	{
+		tmp = get_room(mate->name, inf);
+		if (tmp->lvl > 0)
+			count++;
+		mate = mate->next;
+	}
+	return (count);
+}
 
 
 
