@@ -24,7 +24,7 @@ int		is_connection(char *str)
 	int	i;
 
 	i = 1;
-	if (str[0] == '-')
+	if (str[0] == '-' || is_comment(str))
 		return (0);
 	if (ft_strchr(str, '-'))
 	{

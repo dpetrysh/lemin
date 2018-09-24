@@ -67,11 +67,13 @@ int		ft_read(t_info *inf)
 	{
 		if (is_connection(line))
 		{
+			printf("line===%s\n", line);
 			connect = ft_strsplit(line, '-');
 			if (check_connection(line, inf))
 				add_mate(connect[0], connect[1], inf);
 			free(connect);
 		}
+
 		free(line);
 		is_finished = get_next_line(0, &line);
 	}
@@ -113,13 +115,9 @@ int		main(void)
 		print_al(&inf);
 		printf("\n");
 		get_ways(&inf);
-		// way = create_way(&inf);
-		// // print_way(way);
-		// // printf("\n\n\n");
-		// // way = create_way(&inf);
-		// // print_way(way);
+		print_ways(&inf);
 
-		// system("leaks amain");
+		system("leaks amain");
 	}
 	return (0);
 }

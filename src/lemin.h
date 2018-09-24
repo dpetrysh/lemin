@@ -56,9 +56,11 @@ typedef	struct		s_info
 	int		n;
 	int		index;
 	int		size;
+	int		way_num;
 	char	*rooms;
 	t_mate	**al;
 	t_room	**ht;
+	t_way	**ways;
 	t_room	*start;
 	t_room	*end;
 	t_que	*front;
@@ -112,6 +114,8 @@ utility.c
 void		make_info(t_info *inf);
 char		*join_slashn(char **str);
 int			enqueue_and_finish(t_room *room, t_info *inf);
+int			start_end_connected(t_info *inf);
+t_way		*start_end_way(t_info *inf);
 
 /*
 ht_make.c
@@ -148,7 +152,7 @@ printer.c
 */
 void		print_al(t_info *inf);
 void		print_ht(t_room **ht, t_info *inf);
-void		print_way(t_way *way);
+void		print_ways(t_info *inf);
 
 
 /*

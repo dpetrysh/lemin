@@ -14,17 +14,20 @@
 
 void	get_ways(t_info *inf)
 {
-	int i;
-	int num;
+	int		i;
+	t_way	*way;
 
 	i = -1;
-	num = count_safe_mates(inf->end, inf);
-	if (num < 1)
+	inf->way_num = count_safe_mates(inf->end, inf);
+	if (inf->way_num < 1)
 		finish(ABSENT_WAYS);
-	// while (++i < num)
-	// {
-
-	// }
+	if (start_end_connected(inf))
+		inf->way_num++;
+	inf->ways = (t_way **)malloc(sizeof(t_way *) * inf->way_num);
+	if (start_end_connected(inf) && (way = start_end_way(inf)))
+		inf->ways[++i] = way;
+	while (++i < inf->way_num)
+		inf->ways[i] = create_way(inf);
 }
 
 t_way	*create_way(t_info *inf)
