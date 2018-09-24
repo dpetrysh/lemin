@@ -100,6 +100,7 @@ int		main(void)
 	t_info inf;
 
 	int n;
+	t_way *way;
 
 	make_info(&inf);
 	if (!(n = ft_read(&inf)))
@@ -108,7 +109,15 @@ int		main(void)
 		printf("n=%d\n", inf.n);
 		printf("size=%d\n", inf.size);
 		print_ht(inf.ht, &inf);
+		printf("\n");
 		print_al(&inf);
+		printf("\n");
+		way = create_way(&inf);
+		print_way(way);
+		printf("\n\n\n");
+		way = create_way(&inf);
+		print_way(way);
+
 		// system("leaks amain");
 	}
 	return (0);

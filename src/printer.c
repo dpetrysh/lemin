@@ -52,3 +52,18 @@ void		print_al(t_info *inf)
 		printf("\n");
 	}
 }
+
+void		print_way(t_way *way)
+{
+	t_que	*tmp;
+
+	tmp = way->front;
+	printf("Way:");
+	while (tmp)
+	{
+		printf("%s-->", tmp->room->name);
+		tmp = tmp->next;
+	}
+	printf("\n");
+}
+

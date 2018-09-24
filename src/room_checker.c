@@ -78,11 +78,9 @@ void	check_new_room(t_room *new_room, t_info *inf)
 
 int		room_is_present(char *name, t_info *inf)
 {
-	int		i;
 	int		id;
 	t_room	*tmp;
 
-	i = -1;
 	id = ft_hashfunc(name, inf->size);
 	tmp = inf->ht[id];
 	while (tmp)

@@ -43,6 +43,12 @@ typedef	struct		s_que
 	struct	s_que	*next;
 }					t_que;
 
+typedef	struct		s_way
+{
+	struct	s_que	*front;
+	struct	s_que	*rear;
+}					t_way;
+
 typedef	struct		s_info
 {
 	bool	start_is_present;
@@ -94,16 +100,16 @@ void		read_rooms(char **line, t_info *inf);
 /*
 checker.c
 */
-int		is_digital_str(char *str);
-int		is_room_name(char *str);
-int		is_comment(char *str);
-int		is_connection(char *str);
+int			is_digital_str(char *str);
+int			is_room_name(char *str);
+int			is_comment(char *str);
+int			is_connection(char *str);
 
 /*
 utility.c
 */
-void	make_info(t_info *inf);
-char	*join_slashn(char **str);
+void		make_info(t_info *inf);
+char		*join_slashn(char **str);
 
 /*
 ht_make.c
@@ -140,6 +146,7 @@ printer.c
 */
 void		print_al(t_info *inf);
 void		print_ht(t_room **ht, t_info *inf);
+void		print_way(t_way *way);
 
 
 /*
@@ -157,6 +164,14 @@ void		bfs_search(t_info *inf);
 void		enqueue_mates(t_room *room, t_info *inf);
 void		enqueue(t_room *room, t_info *inf);
 void		dequeue(t_info *inf);
+
+/*
+tracker.c
+*/
+t_way		*create_way(t_info *inf);
+int			min_mate_level(t_room *current, t_info *inf);
+int			have_another_older(t_room *older, t_room *applicant, t_info *inf);
+int			enqueue_closest(t_room *current, t_info *inf);
 
 #endif
 

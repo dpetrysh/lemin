@@ -15,12 +15,10 @@
 
 char	*ft_strtrim(char const *s)
 {
-	int		i;
 	int		start;
 	int		end;
 	char	*ch;
 
-	i = 0;
 	if (s == NULL)
 		return (NULL);
 	start = ft_strbegin(s);
