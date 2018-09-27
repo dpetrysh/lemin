@@ -68,7 +68,7 @@ int			put_room_in(char *str_room, t_info *inf, int *quality)
 		inf->end_is_present = 1;
 		return (put_in_ht(room, inf));
 	}
-	return (SOME);
+	return (0);
 }
 
 t_room		*create_room(char *str, t_info *inf)

@@ -201,6 +201,8 @@ int			is_free_ways(int ways, t_info *inf);
 void		enqueue_cell(t_que *prev, t_que *cell, t_info *inf);
 void		dequeue_cell(t_info *inf);
 int			ways_to_use(t_info *inf);
+void		move_ants_in_graph(t_info *inf);
+void		push_new_ants(int ways, t_info *inf);
 
 #endif
 

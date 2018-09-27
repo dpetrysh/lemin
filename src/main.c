@@ -115,8 +115,10 @@ int		main(void)
 		bfs_search(&inf);
 		print_ht(inf.ht, &inf);
 		printf("\n");
+		// printf("aaa\n");
 		print_al(&inf);
 		printf("\n");
+		// printf("vv\n");
 		track_ways(&inf);
 		print_ways(&inf);
 		give_answer(&inf);

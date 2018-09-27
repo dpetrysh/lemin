@@ -12,46 +12,49 @@
 
 #include "lemin.h"
 
-// void	push_new_ants(t_info *inf)
-// {
-	
-// }
-
-void	give_answer(t_info *inf)
+void	push_new_ants(int ways, t_info *inf)
 {
 	int i;
 
+	i = -1;
+	while (++i < ways)
+		if (inf->n && !inf->ways[i]->front->room->ant)
+			enqueue_cell(NULL, inf->ways[i]->front, inf);
+}
+
+void	move_ants_in_graph(t_info *inf)
+{
+	int i;
+
+	printf("\n");
+	i = -1;
+	while (++i < inf->in)
+	{
+		if (inf->ans_front->cell->room == inf->end)
+		{
+			dequeue_cell(inf);
+			inf->in--;
+			--i;
+		}
+		else
+		{
+			enqueue_cell(inf->ans_front->cell, inf->ans_front->cell->next, inf);
+			dequeue_cell(inf);
+		}
+	}
+}
+
+void	give_answer(t_info *inf)
+{
 	int ways;
 
 	while (inf->in > 0 || inf->n > 0)
 	{
 		ways = ways_to_use(inf);
 		if (inf->n && is_free_ways(ways, inf))
-		{
-			i = -1;
-			while (++i < ways)
-				if (inf->n && !inf->ways[i]->front->room->ant)
-					enqueue_cell(NULL, inf->ways[i]->front, inf);
-		}
+			push_new_ants(ways, inf);
 		else
-		{
-			printf("\n");
-			i = -1;
-			while (++i < inf->in)
-			{
-				if (inf->ans_front->cell->room == inf->end)
-				{
-					dequeue_cell(inf);
-					inf->in--;
-					--i;
-				}
-				else
-				{
-					enqueue_cell(inf->ans_front->cell, inf->ans_front->cell->next, inf);
-					dequeue_cell(inf);
-				}
-			}
-		}
+			move_ants_in_graph(inf);
 	}
 }
 

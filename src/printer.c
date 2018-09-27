@@ -22,7 +22,7 @@ void		print_ht(t_room **ht, t_info *inf)
 	{
 		if (ht[i])
 		{
-			printf("--->id=%d, %s(%d)", i, ht[i]->name, ht[i]->lvl);
+			printf("--->id=%d, %s(%d)", i, ht[i]->name, ht[i]->index);
 			tmp = ht[i]->next;
 			while (tmp)
 			{
@@ -42,14 +42,17 @@ void		print_al(t_info *inf)
 	i = -1;
 	while (++i < inf->size)
 	{
-		printf("%s", inf->al[i]->name);
-		tmp = inf->al[i]->next;
-		while (tmp)
+		if (inf->al[i])
 		{
-			printf("-->%s", tmp->name);
-			tmp = tmp->next;
+			printf("%s", inf->al[i]->name);
+			tmp = inf->al[i]->next;
+			while (tmp)
+			{
+				printf("-->%s", tmp->name);
+				tmp = tmp->next;
+			}
+			printf("\n");
 		}
-		printf("\n");
 	}
 }
 

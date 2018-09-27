@@ -54,13 +54,15 @@ int		is_room_name(char *str)
 	++i;
 	while (ft_isdigit(str[i]))
 		i++;
-	if (str[i] && str[i] != ' ')
-		return (COORDINATE_PROBLEM);
+	if (!str[i])
+		other_errors(COORDINATE_PROBLEM);
+	if ((str[i] && str[i] != ' ') || !ft_isdigit(str[i + 1]))
+		other_errors(COORDINATE_PROBLEM);
 	++i;
 	while (str[i] && ft_isdigit(str[i]))
 		++i;
 	if (str[i])
-		return (COORDINATE_PROBLEM);
+		other_errors(COORDINATE_PROBLEM);
 	return (1);
 }
 
