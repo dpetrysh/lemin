@@ -68,7 +68,21 @@ void		print_ways(t_info *inf)
 			printf("%s-->", tmp->room->name);
 			tmp = tmp->next;
 		}
-		printf("\n");
+		printf("    len=%d\n", inf->ways[i]->len);
 	}
 }
+
+void	print_start_end_way(t_info *inf)
+{
+	int	i;
+
+	i = 0;
+	while (++i <= inf->n)
+		printf("L[%d]-%s ", i, inf->end->name);
+	printf("\n");
+}
+
+
+
+
 

@@ -16,7 +16,9 @@ void	make_info(t_info *inf)
 {
 	inf->start_is_present = 0;
 	inf->end_is_present = 0;
+	inf->in = 0;
 	inf->n = 0;
+	inf->ant = 0;
 	inf->index = -1;
 	inf->size = 0;
 	inf->way_num = 0;
@@ -24,6 +26,8 @@ void	make_info(t_info *inf)
 	inf->start = NULL;
 	inf->front = NULL;
 	inf->rear = NULL;
+	inf->ans_front = NULL;
+	inf->ans_rear = NULL;
 }
 
 char	*join_slashn(char **str)
@@ -47,9 +51,9 @@ char	*join_slashn(char **str)
 	return (NULL);
 }
 
-int		enqueue_and_finish(t_room *room, t_info *inf)
+int		enqueue_and_return(t_room *room, t_info *inf)
 {
-	enqueue(room, inf);
+	put_in_stack(room, inf);
 	return (0);
 }
 
@@ -79,11 +83,11 @@ t_way	*start_end_way(t_info *inf)
 		if (!ft_strcmp(inf->end->name, mate->name))
 		{
 			new_way = (t_way *)malloc(sizeof(t_way));
-			enqueue(inf->end, inf);
+			put_in_stack(inf->end, inf);
 			new_way->front = inf->front;
-			new_way->rear = inf->rear;
+			// new_way->rear = inf->rear;
 			inf->front = NULL;
-			inf->rear = NULL;
+			// inf->rear = NULL;
 			return (new_way);
 		}
 		mate = mate->next;

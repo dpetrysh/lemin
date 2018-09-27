@@ -89,6 +89,7 @@ t_room		*create_room(char *str, t_info *inf)
 	free(room_info[2]);
 	free(room_info);
 	room->lvl = -1;
+	room->ant = 0;
 	room->next = NULL;
 	room->index = ++inf->index;
 	return (room);

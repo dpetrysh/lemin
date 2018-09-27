@@ -12,20 +12,24 @@
 
 #include "lemin.h"
 
-void	get_ways(t_info *inf)
+void	track_ways(t_info *inf)
 {
 	int		i;
-	t_way	*way;
+	// t_way	*way;
 
 	i = -1;
 	inf->way_num = count_safe_mates(inf->end, inf);
 	if (inf->way_num < 1)
 		finish(ABSENT_WAYS);
 	if (start_end_connected(inf))
-		inf->way_num++;
+	{
+		print_start_end_way(inf);
+		exit(0);
+		// inf->way_num++;
+	}
 	inf->ways = (t_way **)malloc(sizeof(t_way *) * inf->way_num);
-	if (start_end_connected(inf) && (way = start_end_way(inf)))
-		inf->ways[++i] = way;
+	// if (start_end_connected(inf) && (way = start_end_way(inf)))
+	// 	inf->ways[++i] = way;
 	while (++i < inf->way_num)
 		inf->ways[i] = create_way(inf);
 }
@@ -35,17 +39,17 @@ t_way	*create_way(t_info *inf)
 	t_way	*new_way;
 
 	new_way = (t_way *)malloc(sizeof(t_way));
-	enqueue(inf->end, inf);
-	while ((inf->rear->room->lvl > 1 || inf->rear->room == inf->end))
+	put_in_stack(inf->end, inf);
+	new_way->len = 1;
+	while ((inf->front->room->lvl > 1 || inf->front->room == inf->end))
 	{
-		inf->rear->room->lvl = -1;
-		enqueue_closest(inf->rear->room, inf);
+		++new_way->len;
+		inf->front->room->lvl = -1;
+		enqueue_closest(inf->front->room, inf);
 	}
-	inf->rear->room->lvl = -1;
+	inf->front->room->lvl = -1;
 	new_way->front = inf->front;
-	new_way->rear = inf->rear;
 	inf->front = NULL;
-	inf->rear = NULL;
 	return (new_way);
 }
 
@@ -100,12 +104,12 @@ int		enqueue_closest(t_room *current, t_info *inf)
 		{
 			suitable = tmp;
 			if (!have_another_older(current, tmp, inf))
-				return (enqueue_and_finish(tmp, inf));
+				return (enqueue_and_return(tmp, inf));
 		}
 		mate = mate->next;
 	}
 	if (suitable)
-		return (enqueue_and_finish(suitable, inf));
+		return (enqueue_and_return(suitable, inf));
 	return (0);
 }
 

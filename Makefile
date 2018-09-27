@@ -29,7 +29,8 @@ _SRC = main.c \
 		printer.c \
 		adj_list.c \
 		bfs.c \
-		tracker.c
+		tracker.c \
+		answer.c
 
 SRC = $(_SRC:%.c=$(SRC_DIR)%.c)$
 OBJ = $(_SRC:%.c=%.o)$

@@ -23,6 +23,7 @@
 
 typedef	struct		s_room
 {
+	int				ant;
 	int				index;
 	int				lvl;
 	int				x;
@@ -45,14 +46,22 @@ typedef	struct		s_que
 
 typedef	struct		s_way
 {
+	int				len;
 	struct	s_que	*front;
-	struct	s_que	*rear;
 }					t_way;
+
+typedef	struct		s_ans
+{
+	t_que			*cell;
+	struct	s_ans	*next;
+}					t_ans;
 
 typedef	struct		s_info
 {
 	bool	start_is_present;
 	bool	end_is_present;
+	int		in;
+	int		ant;
 	int		n;
 	int		index;
 	int		size;
@@ -65,6 +74,8 @@ typedef	struct		s_info
 	t_room	*end;
 	t_que	*front;
 	t_que	*rear;
+	t_ans	*ans_front;
+	t_ans	*ans_rear;
 }					t_info;
 
 typedef enum		e_qualities
@@ -82,7 +93,6 @@ typedef enum		e_errors
 	ALLOCATE_MEMORY_PROBLEM,
 	MEMORY_PROBLEM,
 	PUTTING_ROOM_PROBLEM,
-	SOME,
 	ROOM_NAME_DUPLICATE,
 	ROOM_COORD_DUPLICATE,
 	CONNECT_IS_ROOM_ISNT,
@@ -113,7 +123,7 @@ utility.c
 */
 void		make_info(t_info *inf);
 char		*join_slashn(char **str);
-int			enqueue_and_finish(t_room *room, t_info *inf);
+int			enqueue_and_return(t_room *room, t_info *inf);
 int			start_end_connected(t_info *inf);
 t_way		*start_end_way(t_info *inf);
 
@@ -153,6 +163,7 @@ printer.c
 void		print_al(t_info *inf);
 void		print_ht(t_room **ht, t_info *inf);
 void		print_ways(t_info *inf);
+void		print_start_end_way(t_info *inf);
 
 
 /*
@@ -169,6 +180,7 @@ bfs.c
 void		bfs_search(t_info *inf);
 void		enqueue_mates(t_room *room, t_info *inf);
 void		enqueue(t_room *room, t_info *inf);
+void		put_in_stack(t_room *room, t_info *inf);
 void		dequeue(t_info *inf);
 
 /*
@@ -179,7 +191,16 @@ int			min_mate_level(t_room *current, t_info *inf);
 int			have_another_older(t_room *older, t_room *applicant, t_info *inf);
 int			enqueue_closest(t_room *current, t_info *inf);
 int			count_safe_mates(t_room *room, t_info *inf);
-void		get_ways(t_info *inf);
+void		track_ways(t_info *inf);
+
+/*
+answer.c
+*/
+void		give_answer(t_info *inf);
+int			is_free_ways(int ways, t_info *inf);
+void		enqueue_cell(t_que *prev, t_que *cell, t_info *inf);
+void		dequeue_cell(t_info *inf);
+int			ways_to_use(t_info *inf);
 
 #endif
 

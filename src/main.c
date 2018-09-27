@@ -18,6 +18,14 @@ int		get_ants_number(t_info *inf)
 
 	if (get_next_line(0, &line) && is_digital_str(line))
 		inf->n = ft_atoi(line);
+	if (is_comment(line))
+	{
+		free(line);
+		while(get_next_line(0, &line) && is_comment(line))
+			free(line);
+	}
+	if (is_digital_str(line))
+		inf->n = ft_atoi(line);
 	else
 	{
 		free(line);
@@ -67,13 +75,11 @@ int		ft_read(t_info *inf)
 	{
 		if (is_connection(line))
 		{
-			printf("line===%s\n", line);
 			connect = ft_strsplit(line, '-');
 			if (check_connection(line, inf))
 				add_mate(connect[0], connect[1], inf);
 			free(connect);
 		}
-
 		free(line);
 		is_finished = get_next_line(0, &line);
 	}
@@ -102,22 +108,19 @@ int		main(void)
 	t_info inf;
 
 	int n;
-	// t_way *way;
 
 	make_info(&inf);
 	if (!(n = ft_read(&inf)))
 	{
 		bfs_search(&inf);
-		printf("n=%d\n", inf.n);
-		printf("size=%d\n", inf.size);
 		print_ht(inf.ht, &inf);
 		printf("\n");
 		print_al(&inf);
 		printf("\n");
-		get_ways(&inf);
+		track_ways(&inf);
 		print_ways(&inf);
-
-		system("leaks amain");
+		give_answer(&inf);
+		// system("leaks amain");
 	}
 	return (0);
 }

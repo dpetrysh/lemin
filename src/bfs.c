@@ -48,6 +48,23 @@ void	enqueue_mates(t_room *room, t_info *inf)
 	}
 }
 
+void	put_in_stack(t_room *room, t_info *inf)
+{
+	t_que	*temp;
+
+	temp = (t_que *)malloc(sizeof(t_que));
+	temp->room = room;
+	temp->next = NULL;
+	if (!inf->front && !inf->rear)
+	{
+		inf->front = temp;
+		inf->rear = temp;
+		return;
+	}
+	temp->next = inf->front;
+	inf->front = temp;
+}
+
 void	enqueue(t_room *room, t_info *inf)
 {
 	t_que	*temp;
