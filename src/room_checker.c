@@ -31,8 +31,9 @@ int		check_connection(char *connect_str, t_info *inf)
 		}
 		if (!check_connection_dub(connect[0], connect[1], inf))
 		{
-			free_char_arr(connect);
-			finish(DOUBLE_CONNECTION);
+			// free_char_arr(connect);
+			// finish(DOUBLE_CONNECTION);
+			return (0);
 		}
 		free_char_arr(connect);
 		return (1);

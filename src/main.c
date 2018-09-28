@@ -14,30 +14,29 @@
 
 int		get_ants_number(t_info *inf)
 {
-	char *line;
+	int		er;
+	char	*line;
+	bool	mistake;
 
-	if (get_next_line(0, &line) && is_digital_str(line))
-		inf->n = ft_atoi(line);
+	mistake = false;
+	er = get_next_line(0, &line);
+	if (er == 0 || er == -1)
+		other_errors(WRONG_FILE);
 	if (is_comment(line))
 	{
 		free(line);
-		while(get_next_line(0, &line) && is_comment(line))
+		while (get_next_line(0, &line) && is_comment(line))
 			free(line);
 	}
 	if (is_digital_str(line))
-		inf->n = ft_atoi(line);
+	{
+		if ((inf->n = ft_atoi(line)) < 1)
+			mistake = true;
+	}
 	else
-	{
-		free(line);
-		return (0);
-	}
-	if (inf->n < 1)
-	{
-		free(line);
-		return (0);
-	}
+		mistake = true;
 	free(line);
-	return (1);
+	return (!mistake);
 }
 
 void		read_rooms(char **line, t_info *inf)
@@ -46,7 +45,7 @@ void		read_rooms(char **line, t_info *inf)
 	int		err;
 
 	inf->rooms = (char *)ft_memalloc(1);
-	while (get_next_line(0, line) && !is_connection(*line) && (err = is_room_name(*line)) && err == 1)
+	while (get_next_line(0, line) && !is_connection(*line) && (err = is_room_name(*line)) == 1)
 	{
 		if (!is_comment(*line))
 			inf->size++;
@@ -122,7 +121,7 @@ int		main(void)
 		track_ways(&inf);
 		print_ways(&inf);
 		give_answer(&inf);
-		// system("leaks amain");
+		system("leaks amain");
 	}
 	return (0);
 }

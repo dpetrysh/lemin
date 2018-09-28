@@ -14,20 +14,8 @@
 
 void	make_info(t_info *inf)
 {
-	inf->start_is_present = 0;
-	inf->end_is_present = 0;
-	inf->in = 0;
-	inf->n = 0;
-	inf->ant = 0;
+	ft_memset(inf, 0, sizeof(t_info));
 	inf->index = -1;
-	inf->size = 0;
-	inf->way_num = 0;
-	inf->end = NULL;
-	inf->start = NULL;
-	inf->front = NULL;
-	inf->rear = NULL;
-	inf->ans_front = NULL;
-	inf->ans_rear = NULL;
 }
 
 char	*join_slashn(char **str)

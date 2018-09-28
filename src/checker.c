@@ -24,7 +24,7 @@ int		is_connection(char *str)
 	int	i;
 
 	i = 1;
-	if (str[0] == '-' || is_comment(str))
+	if (str[0] == '-' || is_comment(str) || ft_strchr(str, ' '))
 		return (0);
 	if (ft_strchr(str, '-'))
 	{
@@ -49,7 +49,7 @@ int		is_room_name(char *str)
 		return (1);
 	while (str[i] != ' ' && str[i])
 		++i;
-	if (!str[i] || str[0] == 'L')
+	if (!str[i] || str[0] == 'L' || ft_strchr(str, '-'))
 		finish(ROOM_NAME_ERROR);
 	++i;
 	while (ft_isdigit(str[i]))

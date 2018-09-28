@@ -101,7 +101,8 @@ typedef enum		e_errors
 	DOUBLE_CONNECTION,
 	DOUBLE_START,
 	DOUBLE_END,
-	ABSENT_WAYS
+	ABSENT_WAYS,
+	WRONG_FILE
 }					errors;
 
 /*
