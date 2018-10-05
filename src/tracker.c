@@ -15,7 +15,6 @@
 void	track_ways(t_info *inf)
 {
 	int		i;
-	// t_way	*way;
 
 	i = -1;
 	inf->way_num = count_safe_mates(inf->end, inf);
@@ -25,11 +24,8 @@ void	track_ways(t_info *inf)
 	{
 		print_start_end_way(inf);
 		exit(0);
-		// inf->way_num++;
 	}
 	inf->ways = (t_way **)malloc(sizeof(t_way *) * inf->way_num);
-	// if (start_end_connected(inf) && (way = start_end_way(inf)))
-	// 	inf->ways[++i] = way;
 	while (++i < inf->way_num)
 		inf->ways[i] = create_way(inf);
 }

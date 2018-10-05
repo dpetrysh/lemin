@@ -76,6 +76,8 @@ typedef	struct		s_info
 	t_que	*rear;
 	t_ans	*ans_front;
 	t_ans	*ans_rear;
+	int		error;
+	int		ants_is_joined;
 }					t_info;
 
 typedef enum		e_qualities
@@ -102,7 +104,8 @@ typedef enum		e_errors
 	DOUBLE_START,
 	DOUBLE_END,
 	ABSENT_WAYS,
-	WRONG_FILE
+	WRONG_FILE,
+	START_END_ABSENT
 }					errors;
 
 /*
@@ -110,6 +113,8 @@ main.c
 */
 size_t		ft_hashfunc(char *key, size_t size);
 void		read_rooms(char **line, t_info *inf);
+void		read_connect(char **line, t_info *inf);
+void		join_input(char *line, t_info *inf);
 
 /*
 checker.c
@@ -137,18 +142,21 @@ int			put_in_ht(t_room *new_room, t_info *inf);
 int			put_room_in(char *str_room, t_info *inf, int *quality);
 int			make_ht(t_info *inf);
 
+void		check_on_number(char *str, t_info *inf);
+
 /*
 emancipator.c
 */
-void		free_char_arr(char **rooms);
+int			free_char_arr(char **rooms);
 
 /*
 room_checker.c
 */
 void		check_new_room(t_room *new_room, t_info *inf);
 int			room_is_present(char *name, t_info *inf);
-int			check_connection(char *connect_str, t_info *inf);
+int			check_connection(char *connect_str, char **con, t_info *inf);
 int			check_connection_dub(char *room_name, char *mate_name, t_info *inf);
+void		check_start_end_presence(t_info *inf);
 
 /*
 errors.c
@@ -157,6 +165,9 @@ void		finish(int er);
 void		room_problems(int er);
 void		memory_problem(int er);
 void		other_errors(int er);
+int			return_errors(int er, t_info *inf, int *quality);
+
+void		make_warning(int er, t_info *inf);
 
 /*
 printer.c
@@ -165,6 +176,7 @@ void		print_al(t_info *inf);
 void		print_ht(t_room **ht, t_info *inf);
 void		print_ways(t_info *inf);
 void		print_start_end_way(t_info *inf);
+t_room		*get_room_with_id(int id, char *mate_name, t_info *inf);
 
 
 /*

@@ -19,14 +19,15 @@ int		get_ants_number(t_info *inf)
 	bool	mistake;
 
 	mistake = false;
+	inf->rooms = (char *)ft_memalloc(1);
 	er = get_next_line(0, &line);
 	if (er == 0 || er == -1)
 		other_errors(WRONG_FILE);
 	if (is_comment(line))
 	{
-		free(line);
+		join_input(line, inf);
 		while (get_next_line(0, &line) && is_comment(line))
-			free(line);
+			join_input(line, inf);
 	}
 	if (is_digital_str(line))
 	{
@@ -35,25 +36,30 @@ int		get_ants_number(t_info *inf)
 	}
 	else
 		mistake = true;
-	free(line);
+	join_input(line, inf);
 	return (!mistake);
+}
+
+void		join_input(char *line, t_info *inf)
+{
+	char *tmp;
+	tmp = inf->rooms;
+	inf->rooms = ft_strjoin(inf->rooms, line);
+	inf->rooms = join_slashn(&inf->rooms);
+	if (tmp)
+		free(tmp);
+	free(line);
 }
 
 void		read_rooms(char **line, t_info *inf)
 {
-	char	*tmp;
 	int		err;
 
-	inf->rooms = (char *)ft_memalloc(1);
 	while (get_next_line(0, line) && !is_connection(*line) && (err = is_room_name(*line)) == 1)
 	{
 		if (!is_comment(*line))
 			inf->size++;
-		tmp = inf->rooms;
-		inf->rooms = ft_strjoin(inf->rooms, *line);
-		inf->rooms = join_slashn(&inf->rooms);
-		free(tmp);
-		free(*line);
+		join_input(*line, inf);
 	}
 	if (err != 1 && !is_connection(*line))
 		finish(ROOM_NAME_ERROR);
@@ -61,30 +67,46 @@ void		read_rooms(char **line, t_info *inf)
 
 int		ft_read(t_info *inf)
 {
-	bool	is_finished;
 	char	*line;
-	char	**connect;
 
 	if (!get_ants_number(inf))
 		finish(ANT_AMOUNT_ERROR);
 	read_rooms(&line, inf);
 	make_ht(inf);
-	is_finished = 1;
-	while (is_finished && (is_connection(line) || is_comment(line)))
+	check_start_end_presence(inf);
+	read_connect(&line, inf);
+	if (!is_connection(line) && !is_comment(line))
 	{
-		if (is_connection(line))
+		free(line);
+		return_errors(IT_IS_NOT_CONNECTION, inf, 0);
+	}
+	return (0);
+}
+
+void	read_connect(char **line, t_info *inf)
+{
+	char	**connect;
+	bool	is_finished;
+
+	is_finished = 1;
+	while (is_finished && (is_connection(*line) || is_comment(*line)))
+	{
+		if (is_connection(*line))
 		{
-			connect = ft_strsplit(line, '-');
-			if (check_connection(line, inf))
+			connect = ft_strsplit(*line, '-');
+			if (check_connection(*line, connect, inf))
 				add_mate(connect[0], connect[1], inf);
+			else
+			{
+				free(connect);
+				free(*line);
+				break;
+			}
 			free(connect);
 		}
-		free(line);
-		is_finished = get_next_line(0, &line);
+		free(*line);
+		is_finished = get_next_line(0, line);
 	}
-	if (!is_connection(line) && !is_comment(line))
-		finish(IT_IS_NOT_CONNECTION);
-	return (0);
 }
 
 size_t	ft_hashfunc(char *key, size_t size)
@@ -111,20 +133,19 @@ int		main(void)
 	make_info(&inf);
 	if (!(n = ft_read(&inf)))
 	{
+		// ft_printf("%s\n", inf.rooms);
 		bfs_search(&inf);
 		print_ht(inf.ht, &inf);
-		printf("\n");
-		// printf("aaa\n");
 		print_al(&inf);
-		printf("\n");
-		// printf("vv\n");
 		track_ways(&inf);
 		print_ways(&inf);
 		give_answer(&inf);
-		system("leaks amain");
+		// give warnings
+		system("leaks lem-in");
 	}
 	return (0);
 }
+
 
 
 

@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-void	free_char_arr(char **rooms)
+int		free_char_arr(char **rooms)
 {
 	char **tmp;
 
@@ -23,4 +23,6 @@ void	free_char_arr(char **rooms)
 		rooms++;
 	}
 	free(tmp);
+	return (0);
 }
+

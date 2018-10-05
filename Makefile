@@ -10,7 +10,7 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME = amain
+NAME = lem-in
 
 CC = gcc
 
@@ -35,11 +35,12 @@ _SRC = main.c \
 SRC = $(_SRC:%.c=$(SRC_DIR)%.c)$
 OBJ = $(_SRC:%.c=%.o)$
 
+VPATH := libft/includes
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(OBJ) 
+$(NAME): $(OBJ)
 	make -C $(LIB_DIR)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIB_DIR) -lft -g
 

@@ -29,6 +29,8 @@ int			put_in_ht(t_room *new_room, t_info *inf)
 {
 	int	id;
 
+	if (!new_room)
+		return (0);
 	id = ft_hashfunc(new_room->name, inf->size);
 	check_new_room(new_room, inf);
 	if (!inf->ht[id])
@@ -45,30 +47,33 @@ int			put_in_ht(t_room *new_room, t_info *inf)
 	return (PUTTING_ROOM_PROBLEM);
 }
 
-int			put_room_in(char *str_room, t_info *inf, int *quality)
+int			put_room_in(char *str_room, t_info *inf, int *qlt)
 {
 	t_room	*room;
 
-	if (!(room = create_room(str_room, inf)))
+	room = NULL;
+	if (!(room = create_room(str_room, inf)) && !is_digital_str(str_room))
 		return (ALLOCATE_MEMORY_PROBLEM);
-	if (!(*quality))
-		return (put_in_ht(room, inf));
-	else if (*quality == 1)
+	if (*qlt == 1 && !inf->start_is_present && !is_digital_str(str_room))
 	{
 		room->lvl = 0;
 		inf->start = room;
-		*quality = 0;
+		*qlt = 0;
 		inf->start_is_present = 1;
 		return (put_in_ht(room, inf));
 	}
-	else if (*quality == 2)
+	else if (*qlt == 1 && inf->start_is_present && !is_digital_str(str_room))
+		return (return_errors(DOUBLE_START, inf, qlt));
+	else if (*qlt == 2 && !inf->end_is_present && !is_digital_str(str_room))
 	{
 		inf->end = room;
-		*quality = 0;
+		*qlt = 0;
 		inf->end_is_present = 1;
 		return (put_in_ht(room, inf));
 	}
-	return (0);
+	else if (*qlt == 2 && inf->end_is_present && !is_digital_str(str_room))
+		return (return_errors(DOUBLE_END, inf, qlt));
+	return (put_in_ht(room, inf));
 }
 
 t_room		*create_room(char *str, t_info *inf)
@@ -110,16 +115,29 @@ int			make_ht(t_info *inf)
 	res = 0;
 	while (*room_inp)
 	{
+		check_on_number(*room_inp, inf);
 		if (!ft_strcmp(*room_inp, "##start"))
 			res = 1;
 		else if (!ft_strcmp(*room_inp, "##end"))
 			res = 2;
-		if (is_room_name(*room_inp) == 1 && !is_comment(*room_inp))
+		if (is_room_name(*room_inp) == 1 && !is_comment(*room_inp) && !is_digital_str(*room_inp))
 			put_room_in(*room_inp, inf, &res);
 		room_inp++;
 	}
 	free_char_arr(tmp);
 	return (0);
 }
+
+void	check_on_number(char *str, t_info *inf)
+{
+	if (is_digital_str(str))
+		inf->ants_is_joined++;
+	if (inf->ants_is_joined > 1)
+		finish(ROOM_NAME_ERROR);
+}
+
+
+
+
 
 

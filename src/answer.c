@@ -26,7 +26,7 @@ void	move_ants_in_graph(t_info *inf)
 {
 	int i;
 
-	printf("\n");
+	ft_printf("\n");
 	i = -1;
 	while (++i < inf->in)
 	{
@@ -104,7 +104,7 @@ void	enqueue_cell(t_que *prev, t_que *cell, t_info *inf)
 	}
 	else
 		temp->cell->room->ant = prev->room->ant;
-	printf("L[%d]-%s ", temp->cell->room->ant, temp->cell->room->name);
+	ft_printf("L%d-%s ", temp->cell->room->ant, temp->cell->room->name);
 	if (!inf->ans_front && !inf->ans_rear)
 	{
 		inf->ans_front = temp;

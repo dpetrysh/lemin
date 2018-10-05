@@ -45,11 +45,13 @@ int		is_room_name(char *str)
 	int i;
 
 	i = 0;
-	if (is_comment(str))
+	if (!str[i] || str[0] == 'L' || ft_strchr(str, '-'))
+		finish(ROOM_NAME_ERROR);
+	if (is_comment(str) || is_digital_str(str))
 		return (1);
 	while (str[i] != ' ' && str[i])
 		++i;
-	if (!str[i] || str[0] == 'L' || ft_strchr(str, '-'))
+	if (!str[i])
 		finish(ROOM_NAME_ERROR);
 	++i;
 	while (ft_isdigit(str[i]))

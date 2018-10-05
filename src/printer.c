@@ -22,21 +22,41 @@ void		print_ht(t_room **ht, t_info *inf)
 	{
 		if (ht[i])
 		{
-			printf("--->id=%d, %s(%d)", i, ht[i]->name, ht[i]->index);
+			ft_printf("--->id=%d, %s(%d)", i, ht[i]->name, ht[i]->index);
 			tmp = ht[i]->next;
 			while (tmp)
 			{
-				printf("-->%s(%d)", tmp->name, tmp->index);
+				ft_printf("-->%s(%d)", tmp->name, tmp->index);
 				tmp = tmp->next;
 			}
-			printf("\n");
+			ft_printf("\n");
 		}
 	}
 }
 
+t_room		*get_room_with_id(int id, char *mate_name, t_info *inf)
+{
+	t_mate 	*tmp;
+	t_room	*mate_room;
+
+
+	mate_room = get_room(mate_name, inf);
+	tmp = inf->al[mate_room->index];
+
+	while (tmp)
+	{
+		mate_room = get_room(tmp->name, inf);
+		if (id == mate_room->index)
+			return (mate_room);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
 void		print_al(t_info *inf)
 {
-	t_mate *tmp;
+	t_room	*room;
+	t_mate	*tmp;
 	int i;
 
 	i = -1;
@@ -44,14 +64,16 @@ void		print_al(t_info *inf)
 	{
 		if (inf->al[i])
 		{
-			printf("%s", inf->al[i]->name);
+			room = get_room_with_id(i, inf->al[i]->name, inf);
+			ft_printf("%s", room->name);
+			ft_printf(":->%s", inf->al[i]->name);
 			tmp = inf->al[i]->next;
 			while (tmp)
 			{
-				printf("-->%s", tmp->name);
+				ft_printf("-->%s", tmp->name);
 				tmp = tmp->next;
 			}
-			printf("\n");
+			ft_printf("\n");
 		}
 	}
 }
@@ -65,13 +87,13 @@ void		print_ways(t_info *inf)
 	while (++i < inf->way_num)
 	{
 		tmp = inf->ways[i]->front;
-		printf("Way:");
+		ft_printf("Way:");
 		while (tmp)
 		{
-			printf("%s-->", tmp->room->name);
+			ft_printf("%s-->", tmp->room->name);
 			tmp = tmp->next;
 		}
-		printf("    len=%d\n", inf->ways[i]->len);
+		ft_printf("|length|=%d\n", inf->ways[i]->len);
 	}
 }
 
@@ -81,8 +103,8 @@ void	print_start_end_way(t_info *inf)
 
 	i = 0;
 	while (++i <= inf->n)
-		printf("L[%d]-%s ", i, inf->end->name);
-	printf("\n");
+		ft_printf("L%d-%s ", i, inf->end->name);
+	ft_printf("\n");
 }
 
 

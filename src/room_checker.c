@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-int		check_connection(char *connect_str, t_info *inf)
+int		check_connection(char *connect_str, char **con, t_info *inf)
 {
 	char	**connect;
 
@@ -21,8 +21,8 @@ int		check_connection(char *connect_str, t_info *inf)
 		connect = ft_strsplit(connect_str, '-');
 		if (!room_is_present(connect[0], inf) || !room_is_present(connect[1], inf))
 		{
-			free_char_arr(connect);
-			finish(CONNECT_IS_ROOM_ISNT);
+			inf->error = CONNECT_IS_ROOM_ISNT;
+			return (free_char_arr(connect));
 		}
 		if (!ft_strcmp(connect[0], connect[1]))
 		{
@@ -31,12 +31,12 @@ int		check_connection(char *connect_str, t_info *inf)
 		}
 		if (!check_connection_dub(connect[0], connect[1], inf))
 		{
-			// free_char_arr(connect);
-			// finish(DOUBLE_CONNECTION);
-			return (0);
+			inf->error = DOUBLE_CONNECTION;
+			free(con[0]);
+			free(con[1]);
+			return (free_char_arr(connect));
 		}
-		free_char_arr(connect);
-		return (1);
+		return (!free_char_arr(connect));
 	}
 	return (0);
 }
@@ -93,14 +93,19 @@ int		room_is_present(char *name, t_info *inf)
 	return (0);
 }
 
-void	check_double_start_end(int quality, t_info *inf)
+void	check_start_end_presence(t_info *inf)
 {
-	if (quality == 1 && inf->start_is_present)
-		finish(DOUBLE_START);
-	if (quality == 2 && inf->end_is_present)
-		finish(DOUBLE_END);
+	if (!inf->start || !inf->end)
+		finish(START_END_ABSENT);
 }
 
+// void	check_double_start_end(int quality, t_info *inf)
+// {
+// 	if (quality == 1 && inf->start_is_present)
+// 		finish(DOUBLE_START);
+// 	if (quality == 2 && inf->end_is_present)
+// 		finish(DOUBLE_END);
+// }
 
 
 
