@@ -63,7 +63,7 @@ int			put_room_in(char *str_room, t_info *inf, int *qlt)
 		return (put_in_ht(room, inf));
 	}
 	else if (*qlt == 1 && inf->start_is_present && !is_digital_str(str_room))
-		return (return_errors(DOUBLE_START, inf, qlt));
+		return_errors(DOUBLE_START, inf, qlt);
 	else if (*qlt == 2 && !inf->end_is_present && !is_digital_str(str_room))
 	{
 		inf->end = room;
@@ -72,7 +72,7 @@ int			put_room_in(char *str_room, t_info *inf, int *qlt)
 		return (put_in_ht(room, inf));
 	}
 	else if (*qlt == 2 && inf->end_is_present && !is_digital_str(str_room))
-		return (return_errors(DOUBLE_END, inf, qlt));
+		return return_errors(DOUBLE_END, inf, qlt);
 	return (put_in_ht(room, inf));
 }
 
@@ -124,8 +124,7 @@ int			make_ht(t_info *inf)
 			put_room_in(*room_inp, inf, &res);
 		room_inp++;
 	}
-	free_char_arr(tmp);
-	return (0);
+	return (free_char_arr(tmp));
 }
 
 void	check_on_number(char *str, t_info *inf)

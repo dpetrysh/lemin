@@ -75,20 +75,20 @@ int		return_errors(int er, t_info *inf, int *quality)
 	{
 		*quality = 0;
 		inf->error = DOUBLE_START;
-		ft_printf("Be cautious: there is doubling ##start in your input file\n");
+		// ft_printf("Be cautious: there is doubling ##start in your input file\n");
 		return (DOUBLE_START);
 	}
 	else if (er == DOUBLE_END)
 	{
 		*quality = 0;
 		inf->error = DOUBLE_END;
-		ft_printf("Be cautious: there is doubling ##end in your input file\n");
+		// ft_printf("Be cautious: there is doubling ##end in your input file\n");
 		return (DOUBLE_START);
 	}
 	else if (er == IT_IS_NOT_CONNECTION)
 	{
 		inf->error = IT_IS_NOT_CONNECTION;
-		ft_printf("There ought to be connection\nBut look! there is instead\nDemanding on defection\nSome string! Are you just mad?\n");
+		// ft_printf("There ought to be connection\nBut look! there is instead\nDemanding on defection\nSome string! Are you just mad?\n");
 	}
 	return (-1);
 }

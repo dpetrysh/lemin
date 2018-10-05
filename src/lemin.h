@@ -177,7 +177,8 @@ void		print_ht(t_room **ht, t_info *inf);
 void		print_ways(t_info *inf);
 void		print_start_end_way(t_info *inf);
 t_room		*get_room_with_id(int id, char *mate_name, t_info *inf);
-
+void		print_start_and_end(t_info *inf);
+void		print_warnings(t_info *inf);
 
 /*
 adj_list.c

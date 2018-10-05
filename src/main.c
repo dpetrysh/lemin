@@ -134,13 +134,14 @@ int		main(void)
 	if (!(n = ft_read(&inf)))
 	{
 		// ft_printf("%s\n", inf.rooms);
+		print_start_and_end(&inf);
 		bfs_search(&inf);
 		print_ht(inf.ht, &inf);
 		print_al(&inf);
 		track_ways(&inf);
 		print_ways(&inf);
 		give_answer(&inf);
-		// give warnings
+		print_warnings(&inf);
 		system("leaks lem-in");
 	}
 	return (0);

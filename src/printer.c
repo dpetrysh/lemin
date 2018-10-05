@@ -32,6 +32,7 @@ void		print_ht(t_room **ht, t_info *inf)
 			ft_printf("\n");
 		}
 	}
+	ft_printf("\n");
 }
 
 t_room		*get_room_with_id(int id, char *mate_name, t_info *inf)
@@ -76,6 +77,7 @@ void		print_al(t_info *inf)
 			ft_printf("\n");
 		}
 	}
+	ft_printf("\n");
 }
 
 void		print_ways(t_info *inf)
@@ -95,9 +97,20 @@ void		print_ways(t_info *inf)
 		}
 		ft_printf("|length|=%d\n", inf->ways[i]->len);
 	}
+	ft_printf("\n");
 }
 
-void	print_start_end_way(t_info *inf)
+void		print_warnings(t_info *inf)
+{
+	if (inf->error == DOUBLE_START)
+		ft_printf("Warning: Be cautious: there is doubling ##start in your input file\n");
+	else if (inf->error == DOUBLE_END)
+		ft_printf("Warning: Be cautious: there is doubling ##end in your input file\n");
+	else if (inf->error == IT_IS_NOT_CONNECTION)
+		ft_printf("Warning:\nThere ought to be connection\nBut look! there is instead\nDemanding on defection\nSome string! Are you just mad?\n");
+}
+
+void		print_start_end_way(t_info *inf)
 {
 	int	i;
 
@@ -105,6 +118,12 @@ void	print_start_end_way(t_info *inf)
 	while (++i <= inf->n)
 		ft_printf("L%d-%s ", i, inf->end->name);
 	ft_printf("\n");
+}
+
+void		print_start_and_end(t_info *inf)
+{
+	ft_printf("Start === %s", inf->start->name);
+	ft_printf("    End === %s\n\n", inf->end->name);
 }
 
 
