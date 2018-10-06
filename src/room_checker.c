@@ -21,16 +21,19 @@ int		check_connection(char *connect_str, char **con, t_info *inf)
 		connect = ft_strsplit(connect_str, '-');
 		if (!room_is_present(connect[0], inf) || !room_is_present(connect[1], inf))
 		{
+			printf("1AAAAAAAAASSFSESF%s\n", connect_str);
 			inf->error = CONNECT_IS_ROOM_ISNT;
 			return (free_char_arr(connect));
 		}
 		if (!ft_strcmp(connect[0], connect[1]))
 		{
+			printf("2AAAAAAAAASSFSESF\n");
 			free_char_arr(connect);
 			finish(SELF_CONNECTION);
 		}
 		if (!check_connection_dub(connect[0], connect[1], inf))
 		{
+			printf("3AAAAAAAAASSFSESF\n");
 			inf->error = DOUBLE_CONNECTION;
 			free(con[0]);
 			free(con[1]);

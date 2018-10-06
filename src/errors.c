@@ -83,7 +83,7 @@ int		return_errors(int er, t_info *inf, int *quality)
 		*quality = 0;
 		inf->error = DOUBLE_END;
 		// ft_printf("Be cautious: there is doubling ##end in your input file\n");
-		return (DOUBLE_START);
+		return (DOUBLE_END);
 	}
 	else if (er == IT_IS_NOT_CONNECTION)
 	{

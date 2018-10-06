@@ -72,7 +72,7 @@ int			put_room_in(char *str_room, t_info *inf, int *qlt)
 		return (put_in_ht(room, inf));
 	}
 	else if (*qlt == 2 && inf->end_is_present && !is_digital_str(str_room))
-		return return_errors(DOUBLE_END, inf, qlt);
+		return_errors(DOUBLE_END, inf, qlt);
 	return (put_in_ht(room, inf));
 }
 

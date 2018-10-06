@@ -40,7 +40,7 @@ VPATH := libft/includes
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) ./src/lemin.h
 	make -C $(LIB_DIR)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIB_DIR) -lft -g
 

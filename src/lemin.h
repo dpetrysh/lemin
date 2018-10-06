@@ -58,6 +58,10 @@ typedef	struct		s_ans
 
 typedef	struct		s_info
 {
+	bool	al_on;
+	bool	ht_on;
+	bool	info_on;
+	bool	ways_on;
 	bool	start_is_present;
 	bool	end_is_present;
 	int		in;
@@ -111,6 +115,7 @@ typedef enum		e_errors
 /*
 main.c
 */
+void		read_argc(int ac, char **av, t_info *inf);
 size_t		ft_hashfunc(char *key, size_t size);
 void		read_rooms(char **line, t_info *inf);
 void		read_connect(char **line, t_info *inf);

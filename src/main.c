@@ -91,6 +91,7 @@ void	read_connect(char **line, t_info *inf)
 	is_finished = 1;
 	while (is_finished && (is_connection(*line) || is_comment(*line)))
 	{
+		printf("line=%s\n", *line);
 		if (is_connection(*line))
 		{
 			connect = ft_strsplit(*line, '-');
@@ -98,13 +99,15 @@ void	read_connect(char **line, t_info *inf)
 				add_mate(connect[0], connect[1], inf);
 			else
 			{
+				printf("line=%s\n", *line);
 				free(connect);
-				free(*line);
+				join_input(*line, inf);
 				break;
 			}
 			free(connect);
 		}
-		free(*line);
+		// free(*line);
+		join_input(*line, inf);
 		is_finished = get_next_line(0, line);
 	}
 }
@@ -124,26 +127,45 @@ size_t	ft_hashfunc(char *key, size_t size)
 	return ((s2 << 16) + s1) % size;
 }
 
-int		main(void)
+void	read_argc(int ac, char **av, t_info *inf)
+{
+	int i;
+
+	i = 0;
+	if (ac > 1)
+	{
+		while (av[++i])
+		{
+			if (!ft_strcmp(av[i], "-al"))
+				inf->al_on = 1;
+			else if (!ft_strcmp(av[i], "-ht"))
+				inf->ht_on = 1;
+			else if (!ft_strcmp(av[i], "-info"))
+				inf->info_on = 1;
+			else if (!ft_strcmp(av[i], "-ways"))
+				inf->ways_on = 1;
+		}
+	}
+}
+
+int		main(int ac, char **av)
 {
 	t_info inf;
 
-	int n;
-
 	make_info(&inf);
-	if (!(n = ft_read(&inf)))
-	{
-		// ft_printf("%s\n", inf.rooms);
-		print_start_and_end(&inf);
-		bfs_search(&inf);
-		print_ht(inf.ht, &inf);
-		print_al(&inf);
-		track_ways(&inf);
-		print_ways(&inf);
-		give_answer(&inf);
-		print_warnings(&inf);
-		system("leaks lem-in");
-	}
+	read_argc(ac, av, &inf);
+	ft_read(&inf);
+	bfs_search(&inf);
+	print_start_and_end(&inf);
+	ft_printf(inf.rooms);
+	ft_printf("\n");
+	print_ht(inf.ht, &inf);
+	print_al(&inf);
+	track_ways(&inf);
+	print_ways(&inf);
+	give_answer(&inf);
+	print_warnings(&inf);
+	// system("leaks lem-in");
 	return (0);
 }
 
