@@ -57,6 +57,8 @@ void		read_rooms(char **line, t_info *inf)
 
 	while (get_next_line(0, line) && !is_connection(*line) && (err = is_room_name(*line)) == 1)
 	{
+		if (!ft_strlen(*line))
+			finish(EMPTY_LINE);
 		if (!is_comment(*line))
 			inf->size++;
 		join_input(*line, inf);
@@ -91,7 +93,6 @@ void	read_connect(char **line, t_info *inf)
 	is_finished = 1;
 	while (is_finished && (is_connection(*line) || is_comment(*line)))
 	{
-		printf("line=%s\n", *line);
 		if (is_connection(*line))
 		{
 			connect = ft_strsplit(*line, '-');
@@ -99,14 +100,12 @@ void	read_connect(char **line, t_info *inf)
 				add_mate(connect[0], connect[1], inf);
 			else
 			{
-				printf("line=%s\n", *line);
 				free(connect);
 				join_input(*line, inf);
 				break;
 			}
 			free(connect);
 		}
-		// free(*line);
 		join_input(*line, inf);
 		is_finished = get_next_line(0, line);
 	}

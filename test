@@ -1,18 +1,17 @@
 #sfs
 #starts
-5
-#sfdf
-1 23 3
-##end
-2 16 7
+23
+#d
+##start
+1 2 6
+2 -1 6
 #comment
 3 16 3
-##start
 4 16 5
-##start
 5 9 3
-6 1 5
-7 4 8
+##start
+6 -1 5
+7 4 +8
 ##end
 0 9 5
 0-4

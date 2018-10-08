@@ -21,6 +21,14 @@
 
 #include <stdio.h>
 
+#define RED     "\x1b[31m"
+#define GREEN   "\x1b[32m"
+#define YELLOW  "\x1b[33m"
+#define BLUE    "\x1b[34m"
+#define MAGENTA "\x1b[35m"
+#define CYAN    "\x1b[36m"
+#define RESET   "\x1b[0m"
+
 typedef	struct		s_room
 {
 	int				ant;
@@ -109,7 +117,8 @@ typedef enum		e_errors
 	DOUBLE_END,
 	ABSENT_WAYS,
 	WRONG_FILE,
-	START_END_ABSENT
+	START_END_ABSENT,
+	EMPTY_LINE
 }					errors;
 
 /*
@@ -222,6 +231,15 @@ void		dequeue_cell(t_info *inf);
 int			ways_to_use(t_info *inf);
 void		move_ants_in_graph(t_info *inf);
 void		push_new_ants(int ways, t_info *inf);
+
+/*
+poems.c
+*/
+void		poem_about_room_name(void);
+void		poem_about_ants_num(void);
+void		poem_about_absent_room(void);
+void		poem_about_wrong_file(void);
+
 
 #endif
 

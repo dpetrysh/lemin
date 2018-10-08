@@ -30,7 +30,8 @@ _SRC = main.c \
 		adj_list.c \
 		bfs.c \
 		tracker.c \
-		answer.c
+		answer.c \
+		poems.c
 
 SRC = $(_SRC:%.c=$(SRC_DIR)%.c)$
 OBJ = $(_SRC:%.c=%.o)$

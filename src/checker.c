@@ -42,29 +42,30 @@ int		is_connection(char *str)
 
 int		is_room_name(char *str)
 {
-	int i;
+	char	**ingred;
 
-	i = 0;
-	if (!str[i] || str[0] == 'L' || ft_strchr(str, '-'))
-		finish(ROOM_NAME_ERROR);
 	if (is_comment(str) || is_digital_str(str))
 		return (1);
-	while (str[i] != ' ' && str[i])
-		++i;
-	if (!str[i])
+	ingred = ft_strsplit(str, ' ');
+	if (!ingred[0] || !ingred[1] || !ingred[2])
 		finish(ROOM_NAME_ERROR);
-	++i;
-	while (ft_isdigit(str[i]))
-		i++;
-	if (!str[i])
+	if (ingred[3])
+		finish(ROOM_NAME_ERROR);
+	if (!ingred[0][0] || ingred[0][0] == 'L' || ft_strchr(ingred[0], '-'))
+		finish(ROOM_NAME_ERROR);
+	if (!ft_isdigit(ingred[1][0]) && !(ingred[1][0] == '-' ||
+		ingred[1][0] == '+'))
 		other_errors(COORDINATE_PROBLEM);
-	if ((str[i] && str[i] != ' ') || !ft_isdigit(str[i + 1]))
+	else if ((ingred[1][0] == '-' || ingred[1][0] == '+') &&
+		!is_digital_str(ingred[1] + 1))
 		other_errors(COORDINATE_PROBLEM);
-	++i;
-	while (str[i] && ft_isdigit(str[i]))
-		++i;
-	if (str[i])
+	if (!ft_isdigit(ingred[2][0]) && !(ingred[2][0] == '-' ||
+		ingred[2][0] == '+'))
 		other_errors(COORDINATE_PROBLEM);
+	else if ((ingred[2][0] == '-' || ingred[2][0] == '+') &&
+		!is_digital_str(ingred[2] + 1))
+		other_errors(COORDINATE_PROBLEM);
+	free_char_arr(ingred);
 	return (1);
 }
 
